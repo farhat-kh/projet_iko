@@ -1,0 +1,101 @@
+/* Styles généraux */
+.apropos-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    /* font-family: 'Arial', sans-serif; */
+    color: #333;
+  }
+  
+  /* En-tête */
+  .apropos-header {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+    color: white;
+    padding: 50px 20px;
+    border-radius: 10px;
+  }
+  
+  .apropos-logo {
+    width: 120px;
+    margin-bottom: 15px;
+  }
+  
+  .apropos-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  /* Sections */
+  .apropos-content, .apropos-mission, .apropos-valeurs, .apropos-engagements {
+    margin: 40px 0;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .apropos-section h2 {
+    color: #2E7D32;
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .apropos-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .apropos-valeurs ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .apropos-valeurs li {
+    background: #f1f1f1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 10px;
+    flex: 1 1 45%;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .apropos-header h1 {
+      font-size: 2rem;
+    }
+    .apropos-section h2 {
+      font-size: 1.8rem;
+    }
+    .apropos-section p {
+      font-size: 1rem;
+    }
+    .apropos-valeurs ul {
+      flex-direction: column;
+      align-items: center;
+    }
+    .apropos-valeurs li {
+      flex: 1 1 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .apropos-header h1 {
+      font-size: 1.5rem;
+    }
+    .apropos-section h2 {
+      font-size: 1.3rem;
+    }
+    .apropos-section p {
+      font-size: 0.9rem;
+    }
+    .apropos-valeurs li {
+      flex: 1 1 100%;
+    }
+  }  

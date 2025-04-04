@@ -1,0 +1,57 @@
+/* Styles généraux */
+.terms-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    /* font-family: 'Arial', sans-serif; */
+    /* color: #333; */
+  }
+  
+  /* En-tête */
+  .terms-header {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+    /* color: white; */
+    padding: 50px 20px;
+    border-radius: 10px;
+  }
+  
+  .terms-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  /* Sections */
+  .terms-content, .terms-section {
+    margin: 40px 0;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .terms-section h2 {
+    /* color: #2E7D32; */
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .terms-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .terms-header h1 {
+      font-size: 2rem;
+    }
+    .terms-section h2 {
+      font-size: 1.8rem;
+    }
+    .terms-section p {
+      font-size: 1rem;
+    }
+  }
+  

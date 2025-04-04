@@ -1,0 +1,93 @@
+.compte-container {
+    /* width: 100%; */
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    background-color: #f9f9f9;
+}
+  
+.compte-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+.compte-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+  
+.compte-subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+  
+.compte-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+  
+.compte-form {
+    display: flex;
+    flex-direction: column;
+}
+  
+.compte-form label {
+    text-align: left;
+    margin: 5px 0;
+    font-size: 14px;
+}
+  
+.compte-form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.compte-btn {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+  
+.compte-btn:hover {
+    background-color:black;
+    color: white;
+}
+  
+.compte-forgot {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+}
+  
+.compte-forgot:hover {
+    text-decoration: underline;
+}
+  
+@media (max-width: 768px) {
+    .compte-container {
+      width: 100%;
+      padding: 20px;
+    }
+  
+.compte-box {
+      width: 100%;
+    }
+}

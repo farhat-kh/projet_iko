@@ -26,9 +26,9 @@ function Footer() {
             <h5 className="fw-bold">La Boutique</h5>
             <ul className="list-unstyled">
             <li><Link to="/a-propos" className="text-dark text-decoration-none">À propos</Link></li>
-            <li><Link to="/Contact" className="text-dark text-decoration-none">Contact</Link></li>
-            <li><Link to="/Terms" className="text-dark text-decoration-none">Conditions Générales</Link></li>
-            <li><Link to="/Privacy" className="text-dark text-decoration-none">Politique de Confidentialité</Link></li>
+            <li><Link to="/contact" className="text-dark text-decoration-none">Contact</Link></li>
+            <li><Link to="/terms" className="text-dark text-decoration-none">Conditions Générales</Link></li>
+            <li><Link to="/privacy" className="text-dark text-decoration-none">Politique de Confidentialité</Link></li>
             </ul>
           </Col>
 
