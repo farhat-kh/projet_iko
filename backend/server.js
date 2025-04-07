@@ -11,4 +11,3 @@ app.listen(PORT, () => {
     console.log(`Server running at port  hhttp://localhost:${PORT}`);
 });
 
-app.use("/uploads", express.static("uploads"));

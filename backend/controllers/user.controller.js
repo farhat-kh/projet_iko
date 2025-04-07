@@ -2,11 +2,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ENV = require('../config/env');
 const createError = require('../middlewares/error');
-// const sendEmail = require("../services/nodemailer");
+
 
 // model 
 const Users= require('../models/user.model');
 
+
+// ajouter un utilisateur
 const postUser = async (req, res, next) => {
     try {
         // recupere les donnees de l'utilisateur envoyees dans le corps de la requete
@@ -41,24 +43,7 @@ const postUser = async (req, res, next) => {
 }
 
 
-// verifier l'email
-// const verifyEmail = async (req,res) => {
-//     try {
-//     const token = req.params.token;
-//     // on verifie si le token est valide
-//     const userDecodedToken = jwt.verify(token, ENV.TOKEN);
-//     if(!userDecodedToken) return next(createError(403,"token non valide"));
 
-//     // on verifie si l'utilisateur a deja ete verifie
-//     await Users.findOneAndUpdate(
-//         userDecodedToken.id,{isVerified: true}, {new: true});
-//     res.status(200).json({
-//         message: "User verified !! "
-//     })
-//     }catch (error) {
-//         console.log("error", error.message);
-//     }
-// }
 
 
 // recuperer tous les utilisateurs
@@ -194,7 +179,6 @@ const updateUser = async (req, res, next) => {
 
 module.exports = {
     postUser,
-    // verifyEmail,
     getAllUsers,
     getUser,
     sign,

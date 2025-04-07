@@ -9,11 +9,9 @@ const ENV = require('./config/env');
 // IMPORT ROUTES 
 
 const userRouter = require('./router/user.router');
-const adminRouter = require('./router/admin.router');
-const commandeRouter = require('./router/commande.router');
-const produitRouter = require('./router/produit.router');
-const categorieRouter = require('./router/categorie.router');
+
 const messageRouter = require('./router/message.router');
+
 
 
 
@@ -30,12 +28,14 @@ app.use(cookieParser());
 // URLS API PREFIX 
 
 app.use('/api/user', userRouter);
-app.use('/api/admin', adminRouter);
-app.use('/api/commande', commandeRouter);
-app.use('/api/produit', produitRouter);
-app.use('/api/categorie', categorieRouter);
-app.use('/api/contact', messageRouter);
+// app.use('/api/commande', commandeRouter);
+// app.use('/api/produit', produitRouter);
+// app.use('/api/categorie', categorieRouter);
+
 app.use('/api/messages', messageRouter);
+
+
+
 
 // Middleware de gestion des erreurs
 app.use((error,req,res, next)=>{
