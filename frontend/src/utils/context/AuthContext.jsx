@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect} from 'react'
-
+import React, { createContext, useState,  useEffect} from 'react'
+import { useNavigate } from 'react-router';
 // URL CONSTANT
 import URLS from '../constants/Api'
 // import axios from 'axios'
@@ -22,12 +22,18 @@ export const AuthProvider = ({ children }) => {
       // axios
       const {data, status} = await AXIOS_INSTANCE.post(URLS.POST_LOGIN,userDataForm)
         // mettre a jour l etat du state (auth) avec les données de user
-        setAuth(data)
+        if (status === 200){
+          setAuth(data)
+  // stocker les données de user en localstorage
+  localStorage.setItem('auth', JSON.stringify(data))
+  // rediriger vers la page d'accueil
+  navigate('/')
+  setIsLoading(false)
+  
+        }
 
-        // stocker les données de user en localstorage
-        localStorage.setItem('auth', JSON.stringify(data))
-
-        setIsLoading(false)
+      
+        
       
     } catch (error) {
       console.log(error);
