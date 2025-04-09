@@ -10,8 +10,7 @@
 import React from "react";
 import "../styles/apropos.css"; // Import du fichier CSS
 // import { Nav } from "react-bootstrap";
-import Navbar from "../components/templates/Navbar";
-import Footer from "../components/templates/Footer";
+
 import logo from "../assets/logo.png";
 import '../styles/apropos.css';
 import '../styles/global.css';
@@ -19,7 +18,7 @@ import '../styles/global.css';
 const APropos = () => {
   return (
     <>
-    <Navbar />
+    
 
     <div className="apropos-container">
       <header className="apropos-header">
@@ -62,7 +61,7 @@ const APropos = () => {
         </p>
       </section>
     </div>
-    <Footer/>
+    
     </>
   );
 };

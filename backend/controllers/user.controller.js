@@ -12,7 +12,7 @@ const Users= require('../models/user.model');
 const postUser = async (req, res, next) => {
     try {
         // recupere les donnees de l'utilisateur envoyees dans le corps de la requete
-        const { nom, prenom, email, password } = req.body;
+        const { nom, prenom, email, password, role = "user" } = req.body;
 
         // hachage du mot de passe
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,11 +26,12 @@ const postUser = async (req, res, next) => {
             nom,
             prenom,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role
         });
 
         // Cree un jeton JWT
-        const token = jwt.sign({ id: user._id }, ENV.TOKEN, { expiresIn: '24h' });
+        const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
 
 
         res.status(201).json({
@@ -79,10 +80,12 @@ const sign = async (req, res , next) => {
         if(!user) return next(createError(404, "user not found"));
         // verifie si le mot de passe est correct
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+        // si user est desactive , renvoie une erreur 403
+        if(!user.isActive) return next(createError(403, "ce compte est desactive"));
         // si le mot de passe est incorrect, renvoie une erreur 403
         if(!isPasswordCorrect) return next(createError(403, "wrong password"));
         // Cree un jeton JWT
-        const token = jwt.sign({ id: user._id }, ENV.TOKEN, { expiresIn: '24h' });
+        const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
 
 
         // recupere les infos de l'utilisateur
@@ -116,26 +119,24 @@ const sign = async (req, res , next) => {
 // supprimer un utilisateur
 const deleteUser = async (req, res, next) => {
     try {
-        // verifie si l'utilisateur est authentifie
-        if(!req.user || !req.user.id){ 
-            // console.log(req.user);
-            
-            return next(createError(401, "autentification requise"))
-
-        }
-        // recherche l'utilisateur dans la base de données par son id ( si user existe)
+        // recherche l'utilisateur dans la base de données par son id
         const user = await Users.findById(req.params.id);
-        // si l'utilisateur n'existe pas , renvoie une erreur 404
-        if(!user) return next(createError(404, "user not found"));
-        // verifie si l'utilisateur a le droit de supprimer le compte
-        if(user._id.toString() !== req.user.id.toString()) return next(createError(403, "accès refusé"));
 
-        // supprime l'utilisateur de la base de données
-        //const deletedUser = await Users.findByIdAndDelete(req.params.id);
+        // si l'utilisateur n'existe pas , renvoie une erreur 404
+        if(!user) return next(createError(404, "utilisateur non trouve"));
+
+        // si l'utilisateur connecté n'est ni admin ni superadmin , il ne peut supprimer que lui-meme
+        if(req.user.role !== "admin" && req.user.role !== "superadmin") {
+            if (user._id.toString() !== req.user.id.toString()) {
+              return next(createError(403, "Accès refusé"));
+            }
+            }
+      
 
         // desactive l'utilisateur
         user.isActive = false;
         await user.save();
+
         res.status(200).json({
             message: "utilisateur supprimé",
         })
@@ -148,29 +149,43 @@ const deleteUser = async (req, res, next) => {
 // modifier un utilisateur
 const updateUser = async (req, res, next) => {
     try {
-        // verifie si l'utilisateur est authentifie
-        if(!req.user || !req.user.id){ 
-            // console.log(req.user);
-            
-            return next(createError(401, "autentification requise"))
-
-        }
-        // trouver l'utilisateur par son id
-        const user = await Users.findById(req.params.id);
-        if(!user) return next(createError(404, "user not found"));
-        // verifie si l'utilisateur a le droit de modifier le compte
-        if(user._id.toString() !== req.user.id.toString()) return next(createError(403, "accès refusé"));
-
-        // mettre a jour l'utilisateur
-        const userUpdated = await Users.findByIdandUpdate(req.params.id, req.body, {new: true});
-        
-        res.status(200).json({
-            message: "User updated",
-            userUpdated
-        })
+      // Vérifie si l'utilisateur est authentifié
+    if (!req.user || !req.user.id) {
+        return next(createError(401, "Authentification requise"));
+      }
+  
+      // Trouver l'utilisateur cible
+      const user = await Users.findById(req.params.id);
+      if (!user) {
+        return next(createError(404, "Utilisateur non trouvé"));
+      }
+  
+      // Si l'utilisateur connecté n'est ni admin/superadmin ni lui-même, refuser l'accès
+      if (
+        req.user.role !== "admin" &&
+        req.user.role !== "superadmin" &&
+        req.user.id !== user._id.toString()
+      ) {
+        return next(createError(403, "Accès refusé"));
+      }
+  
+      // Mise à jour du mot de passe si présent
+      if (req.body.password) {
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+      }
+  
+      // Met à jour l'utilisateur
+      const updatedUser = await Users.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+  
+      res.status(200).json({
+        message: "Utilisateur mis à jour avec succès",
+        updatedUser,
+      });  
+    
     } catch (error) {
-        console.log("error", error.message);
-    }
+     next(createError(500, error.message)) }
 }
 
 

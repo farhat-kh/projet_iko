@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const messageController = require('../controllers/message.controller');
+
+// Middlewares
 const verifieAdmin = require('../middlewares/verifieAdmin');
+const verifieToken = require('../middlewares/auth');
 
 
+// Admin only: voir et supprimer les messages
+router.get("/", verifieToken, verifieAdmin, messageController.getAllMessages);
+router.delete("/:id", verifieToken, verifieAdmin, messageController.deleteMessage);
 
-
-// Route pour le formulaire de contact
-// Route pour envoyer un message
+//  Public: envoyer un message (pas besoin d’être connecté)
 router.post("/", messageController.postMessage);
-// Route pour afficher les messages
-router.get("/", verifieAdmin,  messageController.getAllMessages); // pour l'admin
-// Route pour supprimer un message
-router.delete("/:id", verifieAdmin, messageController.deleteMessage); // pour l'admin
 
 module.exports = router;

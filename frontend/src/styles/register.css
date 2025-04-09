@@ -1,0 +1,108 @@
+.inscription-container {
+max-width: 400px;
+margin: 50px auto;
+padding: 20px;
+background: white;
+border-radius: 10px;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+text-align: center;
+}
+
+h2 {
+font-size: 24px;
+margin-bottom: 10px;
+}
+
+.obligatoire {
+font-size: 12px;
+color: red;
+margin-bottom: 10px;
+}
+
+.inscription-form {
+display: flex;
+flex-direction: column;
+}
+
+input {
+width: 100%;
+padding: 10px;
+margin: 8px 0;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+.civilite {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+margin-bottom: 10px;
+}
+
+button {
+background-color: black;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+} 
+
+button:hover {
+background-color: #333;
+color: #fff;
+}
+
+.inscription-link {
+margin-top: 10px;
+font-size: 14px;
+}
+
+.inscription-link a {
+color: #007BFF;
+text-decoration: none;
+}
+
+.inscription-link a:hover {
+text-decoration: underline;
+}
+
+.error-message {
+color: red;
+margin-top: 10px;
+}
+
+.success-message {
+color: green;
+margin-top: 10px;
+}
+
+.error-message, .success-message {
+font-size: 14px;
+}
+
+@media (max-width: 768px) {
+.inscription-container {
+max-width: 90%;
+}
+}
+
+@media (max-width: 480px) {
+.inscription-container {
+max-width: 90%;
+}
+}
+
+@media (max-width: 360px) {
+.inscription-container {
+max-width: 90%;
+}
+}
+
+@media (max-width: 320px) {
+.inscription-container {
+max-width: 90%;
+}
+}

@@ -32,7 +32,6 @@ const Home = () => {
           content="Bienvenue sur iKomeubles, le site de vente de meubles en ligne. Trouvez des tables, des canapés, des lits, des rangements, des assises et des buffets."
         />
       </Helmet>
-      <Navbar />
       {/* Carousel */}
       <Carousel>
         <Carousel.Item>
@@ -162,7 +161,7 @@ const Home = () => {
           </Col>
         </Row>
       </Container>
-      <Footer />
+     
     </>
   );
 };

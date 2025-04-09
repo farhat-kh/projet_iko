@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { Navbar, Nav, Container, Offcanvas, Row, Col } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "../../assets/logo.png";
-
+import { HEADER_LINKS } from "../../utils/configs/HeaderLinks";
 
 
 
@@ -20,16 +20,23 @@ function NavbarComponent() {
           <Navbar.Toggle onClick={() => setShow(true)} />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link as={Link} to="/">ACCUEIL</Nav.Link>
-              <Nav.Link as={Link} to="/categories">CATEGORIES</Nav.Link>
-              <Nav.Link as={Link} to="/a-propos">À PROPOS</Nav.Link>
-              <Nav.Link as={Link} to="/contact">CONTACT</Nav.Link>
-              <Nav.Link as={Link} to="/compte">👤</Nav.Link>
-              <Nav.Link as={Link} to="/panier">🛒</Nav.Link>
+              {HEADER_LINKS.map((link, index) =>(
+                <Nav.Link 
+                  key={index}
+                  as={Link}
+                  to={link.path}
+                  >
+                   {link.label}
+                </Nav.Link>
+              ))}
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+
+
+      
       <Offcanvas show={show} onHide={() => setShow(false)} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menu</Offcanvas.Title>

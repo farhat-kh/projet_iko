@@ -39,7 +39,7 @@ const Contact = () => {
 
   return (
     <>
-    <Navbar/>
+   
     <div className="contact-container">
       <nav className="breadcrumb">
         <span className="breadcrumb-item active" >Accueil</span> /
@@ -70,7 +70,7 @@ const Contact = () => {
         </form>
       </div>
     </div>
-    <Footer/>
+    
     </>
   );
 };

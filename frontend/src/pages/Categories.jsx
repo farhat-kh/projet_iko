@@ -36,7 +36,7 @@ function Categories() {
           content="Decourvez notre large choix de tables, canapés, lits, rangements, assises et buffets."
         />
       </Helmet>
-      <Navbar />
+      
       {/* Catégories */}
       <Container className="text-center my-5">
         <h2>CATÉGORIES</h2>
@@ -53,7 +53,7 @@ function Categories() {
           ))}
         </Row>
       </Container>
-      <Footer />
+      
     </>
   )
 }
