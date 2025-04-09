@@ -10,10 +10,9 @@ import Categories from './pages/Categories'
 import CategorieDetail from './pages/CategorieDetail'
 import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
-// import Categorie from './pages/Categorie'
-// import Inscription from './pages/Inscription'
+
 import MotDePasseOublie from './pages/MotDePasseOublie'
-// import Dashboard from './pages/Dashboard'
+
 
 // services 
 // import PrivateRouer from './utils/helpers/PrivateRouter'

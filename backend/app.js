@@ -9,7 +9,7 @@ const ENV = require('./config/env');
 // IMPORT ROUTES 
 
 const userRouter = require('./router/user.router');
-
+const categorieRouter = require('./router/categories.router');
 const messageRouter = require('./router/message.router');
 
 
