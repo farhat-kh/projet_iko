@@ -12,11 +12,12 @@ const userController = require("../controllers/user.controller");
 
 
 // ROUTES
-router.post("/add", userController.postUser);
+router.post("/register", userController.postUser);
 router.get("/all", userController.getAllUsers);
 router.get("/:id", userController.getUser);
-router.post('/sign' , userController.sign );
+router.post('/login' , userController.sign );
 router.delete("/delete/:id" , verifieToken, verifieAdmin, userController.deleteUser);
+router.get("/verify/:token", userController.verifyEmail);
 router.put("/update/:id" , verifieToken,  userController.updateUser);
 
 

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ENV = require('../config/env');
 const createError = require('../middlewares/error');
+const sendEmail = require('../services/nodemailer');
 
 
 // model 
@@ -11,17 +12,19 @@ const Users= require('../models/user.model');
 // ajouter un utilisateur
 const postUser = async (req, res, next) => {
     try {
-        // recupere les donnees de l'utilisateur envoyees dans le corps de la requete
+
+        // Vérifier si l'utilisateur existe déjà
+        if (await Users.findOne({ email: req.body.email })) {
+            return next(createError(400, "L'utilisateur existe deja"));
+        }
+
+        // récupérer les données de l'utilisateur envoyées dans le corps de la requête
         const { nom, prenom, email, password, role = "user" } = req.body;
 
         // hachage du mot de passe
         const hashedPassword = await bcrypt.hash(password, 10);
 
-
-        // on enovie un email a notre nouvel utilisateur avec le lien de verification
-        // await sendEmail(user, token)
-
-        // creation de l'utilisateur
+        // création de l'utilisateur
         const user = await Users.create({
             nom,
             prenom,
@@ -30,20 +33,61 @@ const postUser = async (req, res, next) => {
             role
         });
 
-        // Cree un jeton JWT
+        // on envoie un e-mail à notre nouvel utilisateur avec le lien de vérification
         const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
-
+        await sendEmail(user, token)
 
         res.status(201).json({
-            message: "User created successfully",
+            message: "Utilisateur créé avec succès",
             user
         })
-} catch (error) {
-    console.log("error", error.message);
-}
+    } catch (error) {
+        console.log("erreur", error.message);
+    }
 }
 
 
+const verifyEmail = async(req, res, next) => {
+   try {
+       const { token } = req.params;
+
+       // Vérifier si le token est valide
+       const decodedToken = jwt.verify(token, ENV.TOKEN);
+       if (!decodedToken) {
+           return res.status(400).json({
+               message: 'Token invalide ou expiré'
+           });
+       }
+
+       // Mettre à jour l'utilisateur
+       const userVerified = await Users.findByIdAndUpdate(
+           decodedToken.id, { isVerified: true }, { new: true }
+       );
+
+       if (!userVerified) {
+           return res.status(404).json({
+               message: 'Utilisateur non trouvé'
+           });
+       }
+
+       res.status(200).json({
+           message: 'Email vérifié avec succès ! Votre compte est activé.',
+           user: userVerified
+       });
+
+   } catch (error) {
+       console.error('Erreur de vérification:', error);
+       if (error.name === 'TokenExpiredError') {
+           return res.status(400).json({
+               message: 'Le lien de vérification a expiré. Veuillez vous réinscrire.'
+           });
+       }
+       res.status(400).json({
+           message: 'Erreur lors de la vérification de l\'email',
+           error: error.message
+       });
+   }
+}
 
 
 
@@ -56,6 +100,7 @@ const getAllUsers = async (req, res) => {
         console.log("error", error.message);
     }
 }
+
 
 
 
@@ -113,6 +158,8 @@ const sign = async (req, res , next) => {
         }
 
  }
+
+
 
 
 
@@ -194,6 +241,7 @@ const updateUser = async (req, res, next) => {
 
 module.exports = {
     postUser,
+    verifyEmail,
     getAllUsers,
     getUser,
     sign,

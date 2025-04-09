@@ -22,7 +22,12 @@ connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 
 // MIDDLEWARES
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: `http://localhost:${ENV.PORT_APPLICATION_FRONT}`,
+        credentials: true
+    }
+));
 app.use(cookieParser());
 
 // URLS API PREFIX 

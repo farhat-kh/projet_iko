@@ -1,39 +1,45 @@
-// const nodemailer = require('nodemailer')
-// const ENV = require('../config/env')
+const nodemailer = require('nodemailer');
+const ENV = require('../config/env');
 
+const transporter = nodemailer.createTransport({
+    // configuration de server de l'envoi de mail SMTP
+    host: 'smtp.gmail.com',
+    port: 587, // 465 pour SSL, 587 pour TLS
+    secure: false, // true pour 465, false pour les autres ports
+    auth: { // configuration de l'authentification avec les identifiants de l'envoi de mail
+        user: ENV.EMAIL_USER,
+        pass: ENV.EMAIL_PASS
+    },
+    timeout: 30000 // augmentez le délai de timeout à 30 secondes
+});
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('Erreur de connexion au serveur SMTP:', error);
+    } else {
+        console.log('Connexion au serveur SMTP réussie');
+    }
+    transporter.close(); // Ferme la connexion au serveur SMTP
+    // transporter.close(); // Ferme la connexion au serveur SMTP
+});
 
-// const transporter = nodemailer.createTransport({
+const sendEmail = async(user, token) => {
+    try {
+        const verificationLink = `${ENV.NOM_DOMAIN}/${token}`;
 
-//     // configuration du serveur SMTP de gmail
-//     host: 'smtp.gmail.com',
-//     // Port standard pour TLS (secure secret layer)
-//     port: 587,
-//     // Pour le TLS (port 587) true pour le SSL (Port 465)
-//     secure: false,
-//     // Authentification avec les identifiants Gmail
-//     auth: {
-//         user: ENV.EMAIL_USER,
-//         pass: ENV.EMAIL_PASS
-//     }
-// });
+        const mailOptions = {
+            from: ENV.EMAIL_PASS,
+            to: user.email,
+            subject: 'Vérification de compte',
+            // text: 'Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant :',
+            html: `<p>Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant : <a href="${verificationLink}">Vérifier mon compte</a></p>`
+        };
 
-// const sendEmail = async (user, verifieToken) => {
-//     const verificationLink = `<a  href='${ENV.PORT_APPLICATION_FRONT}/verification/${verifieToken}'>${verifieToken}</a>`
-    
-//     await transporter.sendMail({
-//         from: ENV.EMAIL_USER,
-//         to: user.email,
-//         sujet: 'Verifiez votre mail',
-//         text: `hello ${user.username}, \n\n, Merci de vous etre inscrit \n\n
-//         Cordialement`,
-//         html: `Cliquez sur ce lien pour verifer votre eamil: ${verificationLink}`
-//     }, (error, info) => {
-//         if (error) {
-//           console.log('Error sending email:', error);
-//         } else {
-//           console.log('Email sent successfully:', info);
-//         }
-//       });
-// }
+        await transporter.sendMail(mailOptions);
+        console.log('Email envoyé avec succès');
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'email:', error);
+        throw error;
+    }
+};
 
-// module.exports = sendEmail;
+module.exports = sendEmail;

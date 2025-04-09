@@ -1,9 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import Navbar from "../components/templates/Navbar";
 import { Link } from "react-router";
-import Footer from "../components/templates/Footer";
 import Carousel from "react-bootstrap/Carousel";
 import caroussel1 from "../assets/caroussel1.jpg";
 import caroussel2 from "../assets/caroussel2.jpg";
