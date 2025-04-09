@@ -1,7 +1,7 @@
 const ENV = require('../config/env');
 const createError = require('../middlewares/error');
 const Categories = require('../models/categories.model');
-const Products = require('../models/products.model');
+const Products = require('../models/produit.model');
 const fs = require('fs');
 const path = require('path');
 

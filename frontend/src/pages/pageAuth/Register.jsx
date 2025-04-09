@@ -4,6 +4,7 @@ import URLS from "../../utils/constants/Api"
 import { REGISTER_FIELDS } from "../../utils/configs/FormFields"
 import "../../styles/register.css"
 import AXIOS_INSTANCE from "../../utils/services/AxiosInstance"
+
 const Register = () => {
   const [user, setUser] = useState({
     civilite: "",
@@ -93,68 +94,3 @@ export default Register
 
 
 
-
-
-// import React, { useState }from 'react'
-// import axios from 'axios'
-// // import "../styles/global.css"
-// // import "../styles/inscription.css"
-
-
-
-// // constant 
-// import URLS from '../../utils/constants/Api'
-// import { REGISTER_FIELDS } from '../../utils/configs/FormFields'
-
-
-
-// const Register = () => {
-
-//     const [user, setUser] = useState({
-//         civilite: "",
-//         nom: "",
-//         prenom: "",
-//         dateNaissance: "",
-//         telephone: "",
-//         email: "",
-//         password: ""
-//         // confirmPassword: "",
-//     })
-//     // handleChnage
-//     const handleChange = event => {
-//         const {name, value} = event.target
-//         setUser(prevUser => ({...prevUser, [name]: value}))
-//     }
-//     // handleSubmit
-//     const handleSubmit = async (event) => {
-//         event.preventDefault()
-//         console.log(user);
-//         try {
-//             const response = await axios.post(URLS.POST_REGISTER, user)
-//         } catch (error) {
-//             console.log(error.message);
-            
-//         }
-        
-//     }
-//     return (
-//     <div>
-//      <form onSubmit={handleSubmit}>
-//         {REGISTER_FIELDS.map(field => (
-//             <div key={field.id}>
-//                 <label htmlFor={field.id}>{field.label}</label>
-//                 <input 
-//                 type={field.type}
-//                 name={field.name}
-//                 id={field.id} 
-//                 placeholder={field.placeholder}   
-//                 onChange={handleChange}   
-//                 />
-//             </div>
-//         ))}
-//         <button>Soumettre</button>
-//      </form>
-//     </div>
-//   )
-// }
-// export default Register

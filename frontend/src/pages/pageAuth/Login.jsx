@@ -39,8 +39,8 @@ const Login = () => {
               />
             </div>
           ))}
-          <button type="submit" className="login-button" disabled={isLoading}>
-            {isLoading ? "Connexion..." : "Se connecter"}
+          <button  className="login-button"  >
+        se connecter
           </button>
           <p className="forgot-password">
             <Link to="/motDePasseOublie">Mot de passe oublié ?</Link>

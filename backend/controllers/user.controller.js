@@ -134,7 +134,7 @@ const sign = async (req, res , next) => {
 
 
         // recupere les infos de l'utilisateur
-        const {password, ...others} = user._doc;
+        const {password, ...userWithoutPassword} = user._doc;
 
         // ajoute le jeton dans les cookies de la requete
         res.cookie("access_token", token, {
@@ -146,7 +146,7 @@ const sign = async (req, res , next) => {
         });
         res.status(200).json({
             message: "User signed in successfully",
-            user
+            user: userWithoutPassword
         })
 
         }

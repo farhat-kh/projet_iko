@@ -18,27 +18,19 @@ export const AuthProvider = ({ children }) => {
   const login = async (userDataForm) => {
 
     try {
-
-      setIsLoading(data)
+      setIsLoading(true)
       // axios
       const {data, status} = await AXIOS_INSTANCE.post(URLS.POST_LOGIN,userDataForm)
-      if(status === 200){
         // mettre a jour l etat du state (auth) avec les données de user
         setAuth(data)
 
         // stocker les données de user en localstorage
-        localStorage.setItem('auth', JSON.stringify(auth))
+        localStorage.setItem('auth', JSON.stringify(data))
 
         setIsLoading(false)
-      }
-
-
-
-
-    
       
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
       setIsLoading(false)
     }
   }

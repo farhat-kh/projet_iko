@@ -32,10 +32,11 @@ function App() {
         <Route path='/a-propos' element={<APropos />} />
         <Route path="/contact" element={<Contact />} />
         {/*route public*/}
-      
+        <Route element={<PublicRouter />}>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         </Route> {/*fin route public*/}
+        </Route>
       
       {/* <Route path='/dashboard' element={<Dashboard />} />  */}
       <Route path='/motDePasseOublie' element={<MotDePasseOublie />} />
