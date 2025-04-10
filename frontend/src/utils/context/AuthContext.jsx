@@ -1,7 +1,7 @@
 import React, { createContext, useState,  useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
 import React,{ Children} from 'react';
 import { useNavigate } from 'react-router';
+
 // URL CONSTANT
 import URLS from '../constants/Api'
 // import axios from 'axios'
@@ -15,7 +15,13 @@ export const AuthProvider = ({ children }) => {
   // Etat pour stocker les informations de l'user connecté.
   const [auth, setAuth] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // Hook pour la navigation
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    isloggedIn()
+  }, [])
   //Fonction pour gerer l authentification de user
   const login = async (userDataForm) => {
 
@@ -42,9 +48,21 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false)
     }
   }
+  const isloggedIn = () => {
+    setIsLoggedIn(true)
+    // recuperation des infos de user depuis le localstorage
+    const currentUser = JSON.parse(localStorage.getItem('auth'))
+    const currentUserParsed = currentUser ? JSON.parse(currentUser) : null
+    setAuth(currentUserParsed) // mettre a jour l'etat du state (auth) avec les données de user
+    setIsLoading(false)
+   
+
  const logout = () => {
-  setAuth(null) // reinitialise l'etat 
+  setIsLoading(true)
+  setAuth(null) // reinitialise l'etat
   localStorage.removeItem('auth') // supprimer les infos de user dans le localstorage
+  navigate('/') //  rediriger vers la page d'accueil
+  setIsLoading(false)
  }
 
   return (
