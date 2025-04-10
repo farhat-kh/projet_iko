@@ -1,16 +1,17 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useContext } from "react";
+import { NavLink,Link } from "react-router";
 import { Navbar, Nav, Container, Offcanvas, Row, Col } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "../../assets/logo.png";
 import { HEADER_LINKS } from "../../utils/configs/HeaderLinks";
-
+import { AuthContext } from "../../utils/context/AuthContext";
 
 
 
 function NavbarComponent() {
   
   const [show, setShow] = useState(false);
+  const {auth, logout} = useContext(AuthContext)
 
   return (
     <>
@@ -32,6 +33,7 @@ function NavbarComponent() {
             </Nav>
           </Navbar.Collapse>
         </Container>
+        {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 COMPTE</Nav.Link>}
       </Navbar>
 
 

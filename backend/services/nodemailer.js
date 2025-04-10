@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
         user: ENV.EMAIL_USER,
         pass: ENV.EMAIL_PASS
     },
-    timeout: 30000 // augmentez le délai de timeout à 30 secondes
+    timeout: 60000 // augmentez le délai de timeout à 30 secondes
 });
 transporter.verify((error, success) => {
     if (error) {
@@ -33,7 +33,7 @@ const sendEmail = async(user, token) => {
             // text: 'Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant :',
             html: `<p>Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant : <a href="${verificationLink}">Vérifier mon compte</a></p>`
         };
-
+        console.log('Envoi de l\'email à:', user.email);
         await transporter.sendMail(mailOptions);
         console.log('Email envoyé avec succès');
     } catch (error) {
