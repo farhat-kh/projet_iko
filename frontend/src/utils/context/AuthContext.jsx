@@ -40,10 +40,10 @@ export const AuthProvider = ({ children }) => {
         
         setAuth(data)
         // stocker les données de user en localstorage
-        console.log("Appel localstorage");
+        
         
         localStorage.setItem('auth', JSON.stringify(data))
-        console.log("Fin localstorage");
+        
         
         // rediriger vers la page d'accueil
         navigate('/')
@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }) => {
 
       }
     } catch (error) {
-      console.log(">>> error", error);
-      alert("Email ou mot de passe incorrect")
+     
+    
       setIsLoading(false)
     }
   }

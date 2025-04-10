@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ENV = require('../config/env');
 const createError = require('../middlewares/error');
-const sendEmail = require('../services/nodemailer');
+//const sendEmail = require('../services/nodemailer');
 
 
 // model 
@@ -46,7 +46,7 @@ const postUser = async (req, res, next) => {
     }
 }
 
-
+/*
 const verifyEmail = async(req, res, next) => {
    try {
        const { token } = req.params;
@@ -88,6 +88,7 @@ const verifyEmail = async(req, res, next) => {
        });
    }
 }
+*/
 
 
 
@@ -241,7 +242,7 @@ const updateUser = async (req, res, next) => {
 
 module.exports = {
     postUser,
-    verifyEmail,
+    // verifyEmail,
     getAllUsers,
     getUser,
     sign,

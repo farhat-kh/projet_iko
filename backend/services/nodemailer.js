@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const ENV = require('../config/env');
+console.log(ENV.EMAIL_PASS,ENV.EMAIL_PASS);
 
 const transporter = nodemailer.createTransport({
     // configuration de server de l'envoi de mail SMTP

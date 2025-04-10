@@ -33,7 +33,7 @@ function NavbarComponent() {
             </Nav>
           </Navbar.Collapse>
         </Container>
-        {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 COMPTE</Nav.Link>}
+        {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 CONNEXION </Nav.Link>}
       </Navbar>
 
 
@@ -49,7 +49,7 @@ function NavbarComponent() {
             <Nav.Link as={Link} to="/categories" onClick={() => setShow(false)}>CATEGORIES</Nav.Link>
             <Nav.Link as={Link} to="/a-propos" onClick={() => setShow(false)}>À PROPOS</Nav.Link>
             <Nav.Link as={Link} to="/contact" onClick={() => setShow(false)}>CONTACT</Nav.Link>
-            <Nav.Link as={Link} to="/login" onClick={() => setShow(false)}>👤 COMPTE</Nav.Link>
+            <Nav.Link as={Link} to="/login" onClick={() => setShow(false)}>👤 CONNEXION</Nav.Link>
             <Nav.Link as={Link} to="/panier" onClick={() => setShow(false)}>🛒 PANIER</Nav.Link>
           </Nav>
         </Offcanvas.Body>
