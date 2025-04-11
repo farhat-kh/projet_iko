@@ -14,14 +14,12 @@ const messageRouter = require('./router/message.router');
 
 
 
-
-
-
 // CONNECT TO MONGODB
 connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 
 // MIDDLEWARES
 app.use(express.json());
+app.use(requestLogger);
 app.use(cors(
     {
         origin: `http://localhost:${ENV.PORT_APPLICATION_FRONT}`,
