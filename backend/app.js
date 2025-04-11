@@ -4,12 +4,14 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const connectMongoDB = require('./config/dbMongo');
 const ENV = require('./config/env');
-
+const requestLogger = require('./middlewares/requestLogger');
 
 // IMPORT ROUTES 
 
 const userRouter = require('./router/user.router');
-const categorieRouter = require('./router/categories.router');
+// const categorieRouter = require('./router/categories.router');
+
+
 const messageRouter = require('./router/message.router');
 
 

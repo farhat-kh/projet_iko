@@ -1,4 +1,3 @@
-const ENV = require("../config/env"); 
 const Message = require("../models/message.model");
 const createError = require("../middlewares/error");
 
