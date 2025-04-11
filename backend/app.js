@@ -9,8 +9,8 @@ const requestLogger = require('./middlewares/requestLogger');
 // IMPORT ROUTES 
 
 const userRouter = require('./router/user.router');
-// const categorieRouter = require('./router/categories.router');
-
+const categoriesRouter = require('./router/categories.router');
+const produitRouter = require('./router/produit.router');
 
 const messageRouter = require('./router/message.router');
 
@@ -34,8 +34,8 @@ app.use(cookieParser());
 
 app.use('/api/user', userRouter);
 // app.use('/api/commande', commandeRouter);
-// app.use('/api/produit', produitRouter);
-// app.use('/api/categorie', categorieRouter);
+app.use('/api/produit', produitRouter);
+app.use('/api/categorie', categoriesRouter);
 
 app.use('/api/messages', messageRouter);
 

@@ -1,108 +1,72 @@
-const ENV = require('../config/env');
-const createError = require('../middlewares/error');
-const Categories = require('../models/categories.model');
-const Products = require('../models/produit.model');
-const fs = require('fs');
-const path = require('path');
+const Category = require("../models/categories.model");
+const createError = require("../middlewares/error");
 
-
-const getAllCategories = async (req, res, next) => {
-    try {
-        const categories = await Categories.find();
-        res.status(200).json(categories);
-    } catch (error) {
-        next(createError(400, error.message));
-    }
-};
-
-const getOneCategory = async (req, res, next) => {
-    try {
-        const category = await Categories.findById(req.params.id);
-        if (!category) {
-            return next(createError(404, 'Category not found'));
-        }
-        res.status(200).json(category);
-    } catch (error) {
-        next(createError(500, error.message));
-    }
-};
-
+// Créer une catégorie
 const createCategory = async (req, res, next) => {
-    try {
-        const { name } = req.body;
-        const image = req.file ? `${ENV.NOM_DOMAIN}/uploads/${req.file.filename}` : null;
+  try {
+    const { nom } = req.body;
+    const existingCategory = await Category.findOne({ nom });
+    if (existingCategory) return next(createError(400, "Catégorie déjà existante"));
 
-        const newCategory = new Categories({
-            name,
-            image
-        });
-
-        await newCategory.save();
-        res.status(201).json(newCategory);
-    } catch (error) {
-        next(createError(400, error.message));
-    }
+    const category = await Category.create({ nom });
+    res.status(201).json({ message: "Catégorie créée", category });
+  } catch (error) {
+    next(createError(500, error.message));
+  }
 };
 
+// Lire toutes les catégories
+const getAllCategories = async (req, res, next) => {
+  try {
+    const categories = await Category.find();
+    res.status(200).json(categories);
+  } catch (error) {
+    next(createError(500, error.message));
+  }
+};
 
+// Lire une catégorie par ID
+const getCategory = async (req, res, next) => {
+  try {
+    const category = await Category.findById(req.params.id);
+    if (!category) return next(createError(404, "Catégorie non trouvée"));
+
+    res.status(200).json(category);
+  } catch (error) {
+    next(createError(500, error.message));
+  }
+};
+
+// Mettre à jour une catégorie
 const updateCategory = async (req, res, next) => {
-    try {
-        const { name } = req.body;
-        const categoryId = req.params.id;
+  try {
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!category) return next(createError(404, "Catégorie non trouvée"));
 
-        const category = await Categories.findById(categoryId);
-        if (!category) {
-            return next(createError(404, 'Category not found'));
-        }
-
-        if (req.file) {
-            // Supprimer l'ancienne image si elle existe
-            if (category.image) {
-                const oldImagePath = path.join(__dirname, '../uploads', category.image.split('/').pop());
-                fs.unlinkSync(oldImagePath);
-            }
-            category.image = `${ENV.NOM_DOMAIN}/uploads/${req.file.filename}`;
-        }
-
-        category.name = name || category.name;
-
-        await category.save();
-        res.status(200).json(category);
-    } catch (error) {
-        next(createError(400, error.message));
-    }
+    res.status(200).json({ message: "Catégorie mise à jour", category });
+  } catch (error) {
+    next(createError(500, error.message));
+  }
 };
 
-
+// Supprimer une catégorie
 const deleteCategory = async (req, res, next) => {
-    try {
-        const categoryId = req.params.id;
+  try {
+    const category = await Category.findByIdAndDelete(req.params.id);
+    if (!category) return next(createError(404, "Catégorie non trouvée"));
 
-        const category = await Categories.findById(categoryId);
-        if (!category) {
-            return next(createError(404, 'Category not found'));
-        }
-
-        // Supprimer l'image de la catégorie
-        if (category.image) {
-            const imagePath = path.join(__dirname, '../uploads', category.image.split('/').pop());
-            fs.unlinkSync(imagePath);
-        }
-
-        // Supprimer tous les produits associés à cette catégorie
-        await Products.deleteMany({ category: categoryId });
-
-        await Categories.findByIdAndDelete(categoryId);
-        res.status(200).json({ message: 'Category deleted successfully' });
-    } catch (error) {
-        next(createError(400, error.message));
-    }
+    res.status(200).json({ message: "Catégorie supprimée" });
+  } catch (error) {
+    next(createError(500, error.message));
+  }
 };
 
 module.exports = {
-    getAllCategories,
-    getOneCategory,
-    createCategory,
-    updateCategory,
-    deleteCategory
+  createCategory,
+  getAllCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
 };

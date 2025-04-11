@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const categorieSchema = new Schema({
-    image: {
+    imageUrl: {
         type: String,
         required: false
     },
     name:{
         type: String,
+        unique: true,
         required: true,
         enum: ["tables", "assises", "lits", "rangements", "canapes", "buffets"],
         trim: true
@@ -18,4 +19,4 @@ const categorieSchema = new Schema({
 
     dateAjout: { type: Date, default: Date.now }
 });
-module.exports = mongoose.model('Categorie', categorieSchema);
+module.exports = mongoose.model('Categories', categorieSchema);
