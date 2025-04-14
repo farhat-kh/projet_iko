@@ -17,6 +17,10 @@ router.get("/all", userController.getAllUsers);
 router.get("/:id", userController.getUser);
 router.post('/login' , userController.sign );
 router.delete("/delete/:id" , verifieToken, verifieAdmin, userController.deleteUser);
+<<<<<<< HEAD
+=======
+// router.get("/verify/:token", userController.verifyEmail);
+>>>>>>> connexion
 router.put("/update/:id" , verifieToken,  userController.updateUser);
 
 

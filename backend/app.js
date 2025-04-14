@@ -34,8 +34,13 @@ app.use(cookieParser());
 
 app.use('/api/user', userRouter);
 // app.use('/api/commande', commandeRouter);
+<<<<<<< HEAD
 app.use('/api/produit', produitRouter);
 app.use('/api/categorie', categoriesRouter);
+=======
+// app.use('/api/produit', produitRouter);
+ app.use('/api/categorie', categorieRouter);
+>>>>>>> connexion
 
 app.use('/api/messages', messageRouter);
 
