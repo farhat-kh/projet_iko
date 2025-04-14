@@ -33,7 +33,7 @@ function NavbarComponent() {
             </Nav>
           </Navbar.Collapse>
         </Container>
-        {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 CONNEXION </Nav.Link>}
+        {/* {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 CONNEXION </Nav.Link>} */}
       </Navbar>
 
 

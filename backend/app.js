@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use('/api/user', userRouter);
 // app.use('/api/commande', commandeRouter);
 // app.use('/api/produit', produitRouter);
-// app.use('/api/categorie', categorieRouter);
+ app.use('/api/categorie', categorieRouter);
 
 app.use('/api/messages', messageRouter);
 
