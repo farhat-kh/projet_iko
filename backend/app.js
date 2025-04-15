@@ -33,14 +33,8 @@ app.use(cookieParser());
 // URLS API PREFIX 
 
 app.use('/api/user', userRouter);
-// app.use('/api/commande', commandeRouter);
 app.use('/api/produit', produitRouter);
 app.use('/api/categorie', categoriesRouter);
-
-// app.use('/api/produit', produitRouter);
- app.use('/api/categorie', categorieRouter);
-
-
 app.use('/api/messages', messageRouter);
 
 

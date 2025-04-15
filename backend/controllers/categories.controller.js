@@ -4,11 +4,11 @@ const createError = require("../middlewares/error");
 // Créer une catégorie
 const createCategory = async (req, res, next) => {
   try {
-    const { nom } = req.body;
-    const existingCategory = await Category.findOne({ nom });
+    const { name, imageUrl } = req.body;
+    const existingCategory = await Category.findOne({ name });
     if (existingCategory) return next(createError(400, "Catégorie déjà existante"));
 
-    const category = await Category.create({ nom });
+    const category = await Category.create({ name, imageUrl });
     res.status(201).json({ message: "Catégorie créée", category });
   } catch (error) {
     next(createError(500, error.message));

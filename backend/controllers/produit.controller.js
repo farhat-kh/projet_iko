@@ -16,7 +16,7 @@ const addProduit = async (req, res, next) => {
 // Récupérer tous les produits
 const getProduits = async (req, res, next) => {
   try {
-    const produits = await Produit.find().populate("categories");
+    const produits = await Produit.find().populate("categorie", "name");
     res.status(200).json(produits);
   } catch (error) {
     next(createError(500, error.message));
@@ -26,7 +26,7 @@ const getProduits = async (req, res, next) => {
 // Récupérer un produit par ID
 const getProduitById = async (req, res, next) => {
   try {
-    const produit = await Produit.findById(req.params.id).populate("categories");
+    const produit = await Produit.findById(req.params.id).populate("categorie", "name");
     if (!produit) return next(createError(404, "Produit non trouvé"));
     res.status(200).json(produit);
   } catch (error) {
