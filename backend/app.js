@@ -13,6 +13,7 @@ const categoriesRouter = require('./router/categories.router');
 const produitRouter = require('./router/produit.router');
 
 const messageRouter = require('./router/message.router');
+const commandeRouter = require('./router/commande.router');
 
 
 
@@ -36,6 +37,7 @@ app.use('/api/user', userRouter);
 app.use('/api/produit', produitRouter);
 app.use('/api/categorie', categoriesRouter);
 app.use('/api/messages', messageRouter);
+app.use('/api/commande', commandeRouter);
 
 
 
