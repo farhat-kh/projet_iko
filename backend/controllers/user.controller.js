@@ -89,28 +89,41 @@ try {
 }
 };
 
-// supprimer un utilisateur
+// Désactiver un utilisateur 
 const deleteUser = async (req, res, next) => {
-try {
-    const user = await Users.findById(req.params.id);
-    if(!user) return next(createError(404, "utilisateur non trouve"));
-
-    if(req.user.role !== "admin" && req.user.role !== "superadmin") {
-        if (user._id.toString() !== req.user.id.toString()) {
-            return next(createError(403, "Accès refusé"));
-        }
+    try {
+      const user = await Users.findById(req.params.id);
+      if (!user) return next(createError(404, "Utilisateur non trouvé"));
+  
+      
+      if (
+        req.user.role !== "admin" &&
+        req.user.role !== "superadmin" &&
+        req.user.id !== user._id.toString()
+      ) {
+        return next(createError(403, "Accès refusé"));
+      }
+  
+   
+      user.isActive = false;
+      await user.save();
+  
+      res.status(200).json({ message: "Compte désactivé avec succès" });
+    } catch (error) {
+      next(createError(500, error.message));
     }
-
-    user.isActive = false;
-    await user.save();
-
-    res.status(200).json({ message: "utilisateur supprimé" });
-
-} catch (error) {
-    console.log("error", error.message);
-}
-};
-
+  };
+  
+// Déconnecter un utilisateur (supprimer le cookie JWT)
+const logoutUser = (req, res) => {
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    res.status(200).json({ message: "Utilisateur déconnecté avec succès" });
+  };
+  
 // modifier un utilisateur
 const updateUser = async (req, res, next) => {
 try {
@@ -155,5 +168,6 @@ getAllUsers,
 getUser,
 sign,
 deleteUser,
+logoutUser,
 updateUser
 };

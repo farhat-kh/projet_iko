@@ -1,26 +1,67 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { Helmet } from "react-helmet";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { Link } from "react-router";
 import Carousel from "react-bootstrap/Carousel";
 import caroussel1 from "../assets/caroussel1.jpg";
 import caroussel2 from "../assets/caroussel2.jpg";
-import tables from "../assets/tables.png";
-import Assises from "../assets/Assises.png";
-import lits from "../assets/lits.png";
-import Rangements from "../assets/Rangements.png";
-import Canapes from "../assets/Canapés.png";
-import Buffets from "../assets/Buffets.png";
-import tableBasse from "../assets/table_basse.png";
 import recVertical from "../assets/Rectangle_vertical.png";
 import recpayasage from "../assets/Rec_paysage1.png";
 import rectangle12 from "../assets/Rectangle-12.png";
 import rectangle13 from "../assets/Rectangle-13.png";
-import inspiration from "../assets/inspi_table.png";
 import "../styles/global.css";
 import "../styles/home.css";
+import axios from "axios";
 
 const Home = () => {
+  const [categories, setCategories] = useState([]);
+  const [inspiredProducts, setInspiredProducts] = React.useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // appel api pour recuperer les categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/categorie");
+        setCategories(response.data);
+      } catch (error) {
+        setError("Erreur lors de la récupération des catégories");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+  
+  useEffect(() => {
+    const fetchInspiration = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/produit");
+        const filteredInspiration = response.data.filter(
+          (item) => item.categorie.name.toLowerCase() === "tables"
+        );
+        setInspiredProducts(filteredInspiration.slice(0, 2)); 
+      } catch (error) {
+        console.error("Erreur lors du chargement de l'inspiration :", error);
+      }
+    };
+  
+    fetchInspiration();
+  }, []);
+  
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  
+
+
   return (
     <>
       <Helmet>
@@ -40,35 +81,36 @@ const Home = () => {
         </Carousel.Item>
       </Carousel>
 
-      {/* Catégories */}
+
+    
       <Container className="text-center my-5">
         <h1>CATÉGORIES</h1>
-        <Row className="g-4 mt-3">
-          {[
-            { name: "Tables", img: tables },
-            { name: "Assises", img: Assises },
-            { name: "Lits", img: lits },
-            { name: "Rangements", img: Rangements },
-            { name: "Canapés", img: Canapes },
-            { name: "Buffets", img: Buffets },
-          ].map((item, index) => (
-            <Col key={index} md={4} sm={6}>
-              <Card>
-                <Card.Img variant="top" src={item.img} />
-                <Card.Body>
-                  <Button
-                    as={Link}
-                    to={`/categorie/${item.name}`}
-                    variant="outline-dark btn-custom"
-                  >
-                    {item.name}
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <Row className="g-5 mt-3">
+            {categories.map((item, index) => (
+              <Col key={index} md={4} sm={6}>
+                <Card className="h-100 ">
+                  <Card.Img variant="top" src={item.imageUrl} />
+                  <Card.Body>
+                    <Button
+                      as={Link}
+                      to={`/categorie/${item.name}`}
+                      variant="outline-dark btn-custom"
+                    >
+                      {item.name}
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
+
+    
 
       {/* Galerie */}
       <Container className="my-5">
@@ -115,50 +157,35 @@ const Home = () => {
       </Container>
 
       <Container className="my-5">
-        <h2 className="text-center mb-4">INSPIRATION</h2>
-        <Row className="align-items-center g-4  ">
-          <Col
-            md={6}
-            className="d-flex flex-column justify-content-center  rounded p-4 h-100 "
+  <h2 className="text-center mb-4">INSPIRATION</h2>
+  <Row className="align-items-center g-4">
+    {inspiredProducts.map((prod) => (
+      <Col
+        key={prod._id}
+        md={6}
+        className="d-flex flex-column justify-content-center rounded p-4 h-100"
+      >
+        <img
+          src={prod.imageUrl}
+          className="inspiration img-fluid rounded shadow w-100"
+          alt={prod.nom}
+        />
+        <div className="p-4 text-center h-100">
+          <h3 className="fw-bold">{prod.nom}</h3>
+          <p className="text-muted">{prod.description}</p>
+          <Button
+            as={Link}
+            to={`/produit/${prod._id}`}
+            variant="outline-dark btn-custom"
           >
-            <img
-              src={inspiration}
-              className="inspiration img-fluid rounded shadow w-100"
-              alt="Table en bois"
-            />
-            <div className="p-4 text-center h-100">
-              <h3 className="fw-bold">Table en bois</h3>
-              <p className="text-muted">
-                Apportez une touche d'élégance naturelle à votre intérieur avec
-                une sélection de tables en bois design.
-              </p>
-              <Button as={Link} to="/product" variant="outline-dark btn-custom">
-                Découvrir
-              </Button>
-            </div>
-          </Col>
-          <Col
-            md={6}
-            className="d-flex flex-column justify-content-center  rounded p-4 h-100 "
-          >
-            <img
-              src={tableBasse}
-              className="inspiration img-fluid rounded shadow w-100"
-              alt="Table basse"
-            />
-            <div className="p-4 text-center h-100">
-              <h3 className="fw-bold">Table basse</h3>
-              <p className="text-muted">
-                Apportez une touche d'élégance naturelle à votre intérieur avec
-                une sélection de tables en bois design.
-              </p>
-              <Button as={Link} to="/product" variant="outline-dark btn-custom">
-                Découvrir
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+            Découvrir
+          </Button>
+        </div>
+      </Col>
+    ))}
+  </Row>
+</Container>
+
      
     </>
   );

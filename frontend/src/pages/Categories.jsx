@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from "react-helmet";
-import Navbar from '../components/templates/Navbar'
-import Footer from '../components/templates/Footer'
-import tables from "../assets/tables.png";
-import Assises from "../assets/Assises.png";
-import lits from "../assets/lits.png";
-import Rangements from "../assets/Rangements.png";
-import Canapes from "../assets/Canapés.png";
-import Buffets from "../assets/Buffets.png";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router";
+import axios from "axios";
 
 
 
 function Categories() {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
+  
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // appel api pour recuperer les categories
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/categorie");
+        setCategories(response.data);
+      } catch (error) {
+        setError("Erreur lors de la récupération des catégories");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchCategories();
-  }, [])
-
-  const fetchCategories = async () => {
-    const response = await fetch("http://localhost:8000/api/categorie/all");
-    const data = await response.json();
-    setCategories(data);
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
   }
-
+  if (error) {
+    return <div>{error}</div>;
+  }
+  
 
   return (
     <>
@@ -38,21 +47,32 @@ function Categories() {
       </Helmet>
       
       {/* Catégories */}
-      <Container className="text-center my-5">
-        <h2>CATÉGORIES</h2>
-        <Row className="g-4 mt-3">
-          {categories.map((item, index) => (
-            <Col key={index} md={4} sm={6}>
-              <Card>
-                <Card.Img variant="top" src={` http://localhost:8000/${item.image}`} />
-                <Card.Body>
-                  <Button as={Link} to={`/categories/${item.name}`} variant="outline-dark btn-custom">{item.name}</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+       <Container className="text-center my-5">
+              <h1>CATÉGORIES</h1>
+      
+              {loading ? (
+                <div>Loading...</div>
+              ) : (
+                <Row className="g-5 mt-3">
+                  {categories.map((item, index) => (
+                    <Col key={index} md={4} sm={6}>
+                      <Card className="h-100 ">
+                        <Card.Img variant="top" src={item.imageUrl} />
+                        <Card.Body>
+                          <Button
+                            as={Link}
+                            to={`/categorie/${item.name}`}
+                            variant="outline-dark btn-custom"
+                          >
+                            {item.name}
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              )}
+            </Container>
       
     </>
   )
