@@ -6,24 +6,34 @@ const createError = require("../middlewares/error");
 const postMessage = async (req, res, next) => {
     try {
         const { nom, prenom, email, commentaire } = req.body;
-
+    
+        const emailsInterdits = ["exemple.com", "mailinator.com", "tempmail.com", "test.com"];
+        const emailEstInterdit = emailsInterdits.some((motCle) =>
+          email.toLowerCase().includes(motCle)
+        );
+    
+        if (emailEstInterdit) {
+          return next(createError(400, "Adresse email non autorisée."));
+        }
+    
         const message = new Message({
-            nom,
-            prenom,
-            email,
-            commentaire,
-            date: new Date(),
+          nom,
+          prenom,
+          email,
+          commentaire,
+          date: new Date(),
         });
-
+    
         const savedMessage = await message.save();
         res.status(201).json({
-            message: "Message envoyé avec succès",
-            data: savedMessage,
+          message: "Message envoyé avec succès",
+          data: savedMessage,
         });
-    } catch (error) {
+      } catch (error) {
         next(createError(500, "Erreur lors de l'envoi du message"));
-    }
-};
+      }
+    };
+
 
 const getAllMessages = async (req, res, next) =>{
     try {
@@ -36,7 +46,7 @@ const getAllMessages = async (req, res, next) =>{
 
 
 
-const deleteMessage = async (req, res) => {
+const deleteMessage = async (req, res,next) => {
     try {
         const id = req.params.id;
         const deleted = await Message.findByIdAndDelete(id);

@@ -39,7 +39,7 @@ const Login = () => {
               />
             </div>
           ))}
-          <button  className="login-button" onClick={login}  >
+          <button  className="login-button" type="submit"  >
         se connecter
           </button>
           <p className="forgot-password">
