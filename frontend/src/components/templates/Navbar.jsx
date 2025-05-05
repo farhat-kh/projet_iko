@@ -1,61 +1,77 @@
-import { useState, useContext } from "react";
-import { NavLink,Link } from "react-router";
-import { Navbar, Nav, Container, Offcanvas, Row, Col } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React,{ useState, useContext } from "react";
+import { Link, NavLink } from "react-router";
 import logo from "../../assets/logo.png";
 import { HEADER_LINKS } from "../../utils/configs/HeaderLinks";
 import { AuthContext } from "../../utils/context/AuthContext";
+import "./navbar.css";
+
+
+
 
 
 
 function NavbarComponent() {
+
+const [menuOpen, setMenuOpen] = useState(false);
+const {auth, logout} = useContext(AuthContext)
+
+const toggleMenu = () => {
+  setMenuOpen(!menuOpen);
+}
+
+
+return (
+  <header className="navbar">
+  <div className="navbar-container">
   
-  const [show, setShow] = useState(false);
-  const {auth, logout} = useContext(AuthContext)
+    <div className="navbar-logo">
+      <Link to="/">
+        <img src={logo} alt="Logo" />
+      </Link>
+    </div>
 
-  return (
-    <>
-      <Navbar expand="lg" bg="light" variant="light" className="shadow-sm p-1">
-        <Container>
-          <Navbar.Brand as={Link} to="/" ><img src={logo} alt="logo" /></Navbar.Brand>
-          <Navbar.Toggle onClick={() => setShow(true)} />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              {HEADER_LINKS.map((link, index) =>(
-                <Nav.Link 
-                  key={index}
-                  as={Link}
-                  to={link.path}
-                  >
-                   {link.label}
-                </Nav.Link>
-              ))}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-        {/* {auth ? <button className="btn btn-danger" onClick={logout}>Déconnexion</button> : <Nav.Link as={Link} to="/login">👤 CONNEXION </Nav.Link>} */}
-      </Navbar>
+    <div className="navbar-right">
+      <nav className={`navbar-menu ${menuOpen ? "open" : ""}`}>
+        {HEADER_LINKS.map((link, index) => (
+          <NavLink
+            key={index}
+            to={link.path}
+            className="navbar-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            {link.label}
+          </NavLink>
+        ))}
 
-
-
+        
+{auth ? (
+              <div className="navbar-user">
+                <span>👤 {auth.user?.prenom}</span>
+                <button onClick={logout} className="logout-button">
+                  Se déconnecter
+                </button>
+              </div>
+            ) : (
+              <NavLink
+                to="/compte"
+                className="navbar-link"
+                onClick={() => {
+                  localStorage.setItem("redirectAfterLogin", "/compte");
+                  setMenuOpen(false);
+                }}
+              >
+                👤 MON COMPTE
+              </NavLink>
+            )}
+          </nav>
       
-      <Offcanvas show={show} onHide={() => setShow(false)} placement="end">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menu</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Nav className="flex-column">
-            <Nav.Link as={Link} to="/" onClick={() => setShow(false)}>ACCUEIL</Nav.Link>
-            <Nav.Link as={Link} to="/categories" onClick={() => setShow(false)}>CATEGORIES</Nav.Link>
-            <Nav.Link as={Link} to="/a-propos" onClick={() => setShow(false)}>À PROPOS</Nav.Link>
-            <Nav.Link as={Link} to="/contact" onClick={() => setShow(false)}>CONTACT</Nav.Link>
-            <Nav.Link as={Link} to="/login" onClick={() => setShow(false)}>👤 CONNEXION</Nav.Link>
-            <Nav.Link as={Link} to="/panier" onClick={() => setShow(false)}>🛒 PANIER</Nav.Link>
-          </Nav>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
-  );
+      <div className="navbar-toggle" onClick={toggleMenu}>
+        ☰
+      </div>
+    </div>
+  </div>
+</header>
+);
 }
 
 export default NavbarComponent;

@@ -4,6 +4,5 @@ export const HEADER_LINKS = [
     {path: "/categories", label:"CATEGORIES"},
     {path: "/a-propos", label:"A PROPOS"},
     {path: "/contact", label:"CONTACT"},
-    {path: "/login", label:"👤 CONNEXION"},
-    {path: "/panier", label:"🛒"}
+    {path: "/panier", label:"🛒 PANIER"}
 ]

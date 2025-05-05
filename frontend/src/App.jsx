@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Login from "./pages/pageAuth/Login";
 import Register from "./pages/pageAuth/Register";
+import Compte from "./pages/pageAuth/Compte";
 import Panier from "./pages/Panier";
 import APropos from "./pages/APropos";
 import Categories from "./pages/Categories";
@@ -33,16 +34,17 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
 
-        {/* Routes publiques uniquement (login/register) */}
+        {/* Routes publiques  */}
         <Route element={<PublicRouter />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
+          <Route path="/compte" element={<Compte />} />
+          <Route path="/panier" element={<Panier />} />
 
         {/* Routes privées (auth requise) */}
         <Route element={<PrivateRouter />}>
-          <Route path="/panier" element={<Panier />} />
-          {/* Tu pourras ajouter ici les pages admin ou compte utilisateur plus tard */}
+         
         </Route>
       </Route>
 

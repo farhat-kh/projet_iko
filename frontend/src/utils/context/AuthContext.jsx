@@ -27,9 +27,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (userDataForm) => {
 
     try {
-      console.log(">>> Appel setIsLoading");
+      
       setIsLoading(true)
-      console.log(">>> Requete");
       
       // axios
       const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_LOGIN, userDataForm)
@@ -45,14 +44,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('auth', JSON.stringify(data))
         
         
-        // rediriger vers la page d'accueil
-        navigate('/')
+        // rediriger vers la page d'origine ou accueil
+        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+        localStorage.removeItem("redirectAfterLogin")
+        navigate(redirectPath)
         setIsLoading(false)
 
       }
     } catch (error) {
-     
-    
       setIsLoading(false)
     }
   }

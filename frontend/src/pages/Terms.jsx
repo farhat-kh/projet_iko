@@ -1,12 +1,10 @@
-import Footer from "../components/templates/Footer"
-import Navbar from "../components/templates/Navbar"
 import '../styles/global.css'
 import '../styles/terms.css'
 
 function Terms() {
   return (
     <>
-    <Navbar/> 
+    
     <div className="terms-container">
       <header className="terms-header">
         <h1>Conditions Générales</h1>
@@ -49,7 +47,7 @@ function Terms() {
         </p>
       </section>
     </div>
-    <Footer/>
+   
     </>
   )
 }

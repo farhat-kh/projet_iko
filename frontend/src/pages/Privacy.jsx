@@ -6,7 +6,7 @@ import Footer from "../components/templates/Footer";
 const Privacy = () => {
   return (
     <>
-    <Navbar/>
+   
     <div className="privacy-container">
       <header className="privacy-header">
         <h1>Politique de Confidentialité</h1>
@@ -50,7 +50,7 @@ const Privacy = () => {
         </p>
       </section>
     </div>
-    <Footer/>
+   
     </>
   );
 };
