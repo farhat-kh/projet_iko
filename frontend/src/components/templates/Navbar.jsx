@@ -44,9 +44,16 @@ return (
         ))}
 
         
-{auth ? (
+        {auth ? (
               <div className="navbar-user">
-                <span>👤 {auth.user?.prenom}</span>
+                <NavLink 
+                  to="/compte"
+                  className="navbar-link"
+                  onClick={() => {
+                  setMenuOpen(false); }}
+                >
+                  👤 {auth.user?.prenom}
+                </NavLink>
                 <button onClick={logout} className="logout-button">
                   Se déconnecter
                 </button>
