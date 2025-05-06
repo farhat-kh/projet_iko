@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/contact.css";
 import AXIOS_INSTANCE from "../utils/services/AxiosInstance"
 import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -29,6 +30,18 @@ const Contact = () => {
 
     const { nom, prenom, email, commentaire } = user;
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const blockedDomains = /@example\.com$|@test\.com$/; 
+    if(!emailRegex.test(email)) {
+      setCheck(false);
+      setError("Adresse e-mail invalide.");
+      return;
+    }
+    if(blockedDomains.test(email)) {
+      setCheck(false);
+      setError("Domaine de l'adresse e-mail bloqué.");
+      return;
+    }
     if (
       nom.length >= 3 &&
       prenom.length >= 3 &&
@@ -46,12 +59,10 @@ const Contact = () => {
         }, 5000);
       } catch (err) {
         setCheck(false);
-        if (err.response?.data?.error?.message) {
-          setError(err.response.data.error.message);
-        } else {
-          setError("Erreur lors de l'envoi du message.");
-        }
-        console.error(err);
+        setError(
+          err.response?.data?.error?.message ||
+            "Erreur lors de l'envoi du message."
+        );
       }
     } else {
       setCheck(false);
@@ -61,9 +72,9 @@ const Contact = () => {
 
   return (
     <div className="contact-container">
-      <nav className="breadcrumb">
-        <span className="breadcrumb-item active">Accueil</span> /
-        <span className="breadcrumb-item"> Contactez-nous</span>
+      <nav className="navigation">
+      <Link to="/" className="navigation-item">Accueil /</Link> 
+      <span className="navigation-item active">Contactez-nous</span>
       </nav>
 
       <div className="contact-form-container">
