@@ -1,81 +1,65 @@
-import  { createContext, useState, useEffect } from 'react'
-import React, { children } from 'react';
-import { useNavigate } from 'react-router';
-
-// URL CONSTANT
-import URLS from '../constants/Api'
-// import axios from 'axios'
+import { createContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import AXIOS_INSTANCE from '../services/AxiosInstance'
+import URLS from '../constants/Api'
 
-// Créer un contexte d'authentification
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-
-  // Etat pour stocker les informations de l'user connecté.
   const [auth, setAuth] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-
   const navigate = useNavigate()
 
   useEffect(() => {
-    isloggedIn()
+    const currentUser = JSON.parse(localStorage.getItem('auth'))
+    if (currentUser) setAuth(currentUser)
   }, [])
-  //Fonction pour gerer l authentification de user
-  const login = async (userDataForm) => {
 
+  const login = async (formData) => {
     try {
-      
       setIsLoading(true)
-      
-      // axios
-      const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_LOGIN, userDataForm)
-      // mettre a jour l etat du state (auth) avec les données de user
+      const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_LOGIN, formData)
       if (status === 200) {
-        // mettre  a jour l'état du state (auth) avec les données de user
-        console.log("status === 200");
-        
+        localStorage.setItem("auth", JSON.stringify(data))
         setAuth(data)
-        // stocker les données de user en localstorage
-        
-        
-        localStorage.setItem('auth', JSON.stringify(data))
-        
-        
-        // rediriger vers la page d'origine ou accueil
-        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+        const redirect = localStorage.getItem("redirectAfterLogin") || "/compte"
         localStorage.removeItem("redirectAfterLogin")
-        navigate(redirectPath)
-        setIsLoading(false)
-
+        navigate(redirect)
       }
     } catch (error) {
+      console.error("Erreur lors de la connexion :", error)
+    } finally {
       setIsLoading(false)
     }
   }
-  const isloggedIn = () => {
-    setIsLoggedIn(true)
-    // recuperation des infos de user depuis le localstorage
-    const currentUser = JSON.parse(localStorage.getItem('auth'))
-    const currentUserParsed = currentUser ? currentUser : null
-    setAuth(currentUserParsed) // mettre a jour l'etat du state (auth) avec les données de user
-    setIsLoading(false)}
 
-
-    const logout = () => {
-      setIsLoading(true)
-      setAuth(null) // reinitialise l'etat
-      localStorage.removeItem('auth') // supprimer les infos de user dans le localstorage
-      navigate('/') //  rediriger vers la page d'accueil
-      setIsLoading(false)
+  const register = async (formData) => {
+    try {
+      setIsLoading(true);
+      const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_REGISTER, formData);
+      if (status === 201) {
+        localStorage.setItem("auth", JSON.stringify(data));
+        setAuth(data);
+        navigate("/compte");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'inscription :", error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return (
-      <AuthContext.Provider value={{ login, logout, auth, isLoading }}>
-        {children}
-      </AuthContext.Provider>
-    )
+
+  const logout = () => {
+    setAuth(null)
+    localStorage.removeItem("auth")
+    navigate("/")
   }
 
+  return (
+    <AuthContext.Provider value={{ auth, login, logout, register, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+export default AuthContext

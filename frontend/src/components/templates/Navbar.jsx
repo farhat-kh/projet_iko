@@ -1,85 +1,55 @@
-import React,{ useState, useContext } from "react";
-import { Link, NavLink } from "react-router";
+import { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import { HEADER_LINKS } from "../../utils/configs/HeaderLinks";
 import { AuthContext } from "../../utils/context/AuthContext";
 import "./navbar.css";
 
-
-
-
-
-
 function NavbarComponent() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { auth, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-const [menuOpen, setMenuOpen] = useState(false);
-const {auth, logout} = useContext(AuthContext)
+  const handleRedirectCompte = () => {
+    if (!auth) {
+      localStorage.setItem("redirectAfterLogin", "/compte");
+      navigate("/login");
+    } else {
+      navigate("/compte");
+    }
+  };
 
-const toggleMenu = () => {
-  setMenuOpen(!menuOpen);
-}
+  return (
+    <header className="Navbar">
+      <div className="nav-logo" onClick={() => navigate("/")}>
+        <img src={logo} alt="Logo" style={{ height: "50px" }} />
+      </div>
 
-
-return (
-  <header className="navbar">
-  <div className="navbar-container">
-  
-    <div className="navbar-logo">
-      <Link to="/">
-        <img src={logo} alt="Logo" />
-      </Link>
-    </div>
-
-    <div className="navbar-right">
-      <nav className={`navbar-menu ${menuOpen ? "open" : ""}`}>
+      <div className={`nav-items ${menuOpen ? "open" : ""}`}>
         {HEADER_LINKS.map((link, index) => (
-          <NavLink
-            key={index}
-            to={link.path}
-            className="navbar-link"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink key={index} to={link.path}>
             {link.label}
           </NavLink>
         ))}
+        <span onClick={handleRedirectCompte}>
+          👤 {auth ? auth.user?.prenom.toUpperCase() : "MON COMPTE"}
+        </span>
+        {auth && (
+         <button onClick={logout} className="logout-button">
+            DECONNEXION
+          </button>
+         )}
 
-        
-        {auth ? (
-              <div className="navbar-user">
-                <NavLink 
-                  to="/compte"
-                  className="navbar-link"
-                  onClick={() => {
-                  setMenuOpen(false); }}
-                >
-                  👤 {auth.user?.prenom}
-                </NavLink>
-                <button onClick={logout} className="logout-button">
-                  Se déconnecter
-                </button>
-              </div>
-            ) : (
-              <NavLink
-                to="/compte"
-                className="navbar-link"
-                onClick={() => {
-                  localStorage.setItem("redirectAfterLogin", "/compte");
-                  setMenuOpen(false);
-                }}
-              >
-                👤 MON COMPTE
-              </NavLink>
-            )}
-          </nav>
-      
-      <div className="navbar-toggle" onClick={toggleMenu}>
-        ☰
       </div>
-    </div>
-  </div>
-</header>
-);
+
+      <div className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+  <div className="bar"></div>
+  <div className="bar"></div>
+  <div className="bar"></div>
+</div>
+
+    </header>
+  );
 }
 
 export default NavbarComponent;
-
