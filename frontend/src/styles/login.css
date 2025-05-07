@@ -66,6 +66,25 @@ margin-top: 1rem;
 transition: background-color 0.3s ease;
 }
 
+.password-wrapper {
+position: relative;
+}
+
+.password-wrapper input {
+width: 100%;
+padding-right: 40px;
+}
+
+.toggle-password {
+position: absolute;
+right: 10px;
+top: 50%;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 18px;
+}
+
+  
 .login-button:hover {
 background-color: #222;
 }

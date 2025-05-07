@@ -3,9 +3,14 @@ import '../../styles/login.css'
 import { LOGIN_FIELDS } from "../../utils/configs/FormFields"
 import { AuthContext } from "../../utils/context/AuthContext"
 import { Link } from "react-router"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 const Login = () => {
   const [user, setUser] = useState({})
+  const [errorMessage, setErrorMessage] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  
   const { login, isLoading } = useContext(AuthContext)
 
   const handleChange = (e) => {
@@ -13,9 +18,16 @@ const Login = () => {
     setUser((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault()
-    login(user)
+    try {
+      await login(user)
+      setErrorMessage("")
+      
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error)
+      setErrorMessage("identifiants incorrects")
+    }
   }
 
   return (
@@ -29,27 +41,52 @@ const Login = () => {
           {LOGIN_FIELDS.map((field) => (
             <div key={field.id} className="login-group">
               <label htmlFor={field.id}>{field.label}*</label>
-              <input
-                type={field.type}
-                id={field.id}
-                name={field.name}
-                placeholder={field.placeholder}
-                onChange={handleChange}
-                required
-              />
+
+              {field.name === "password" ? (
+                <div className="password-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id={field.id}
+                    name={field.name}
+                    placeholder={field.placeholder}
+                    onChange={handleChange}
+                    required
+                  />
+                  <FontAwesomeIcon
+                    icon={showPassword ? faEye : faEyeSlash}
+                    className="toggle-password"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  />
+                  
+                </div>
+              ) : (
+                <input
+                  type={field.type}
+                  id={field.id}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  onChange={handleChange}
+                  required
+                />
+              )}
             </div>
           ))}
-          <button  className="login-button" type="submit"  >
-        se connecter
+
+       
+
+          <button className="login-button" type="submit" disabled={isLoading}>
+            {isLoading ? "Connexion..." : "Se connecter"}
           </button>
+
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <p className="forgot-password">
             <Link to="/motDePasseOublie">Mot de passe oublié ?</Link>
           </p>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login
 

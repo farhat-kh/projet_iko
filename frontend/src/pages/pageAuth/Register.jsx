@@ -4,11 +4,15 @@ import { REGISTER_FIELDS } from "../../utils/configs/FormFields"
 import "../../styles/register.css"
 import { AuthContext } from "../../utils/context/AuthContext"
 import { useNavigate, Link } from "react-router"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 const Register = () => {
   const [user, setUser] = useState({})
   const [message, setMessage] = useState("")
   const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+
   const navigate = useNavigate()
 
   const { register , isLoading } = useContext(AuthContext)
@@ -78,19 +82,37 @@ const Register = () => {
         </div>
 
         {REGISTER_FIELDS.map((field) => (
-         <div key={field.id}>
-         <label htmlFor={field.id}>{field.label}</label>
-         <input
-           type={field.type}
-           id={field.id}
-           name={field.name}
-           placeholder={field.placeholder}
-           onChange={handleChange}
-           required
-         />
-       </div>
-        ))}
+          <div key={field.id} className="register-group">
+            <label htmlFor={field.id}>{field.label}</label>
 
+            {field.name === "password" ? (
+              <div className="password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id={field.id}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  onChange={handleChange}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className="toggle-password"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                />
+              </div>
+            ) : (
+              <input
+                type={field.type}
+                id={field.id}
+                name={field.name}
+                placeholder={field.placeholder}
+                onChange={handleChange}
+                required
+              />
+            )}
+          </div>
+        ))}
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Chargement..." : "S'inscrire"}
         </button>

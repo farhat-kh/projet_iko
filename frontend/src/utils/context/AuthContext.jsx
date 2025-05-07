@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Erreur lors de la connexion :", error)
+      throw new Error("mail ou mot de passe incorrect")
     } finally {
       setIsLoading(false)
     }
