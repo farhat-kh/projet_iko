@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.reset-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #faf9f5;
+}
+
+.reset-form {
+    background-color: #fff;
+    padding: 30px;
+    width : 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.reset-form h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.reset-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.reset-form p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.reset-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: #f7f7f5;
+}
+
+.reset-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.reset-form button:hover {
+    background-color: #56745a;
+}
+
+.reset-form a {
+    display: block;
+    margin-top: 15px;
+    color: #52718b;
+    text-decoration: none;
+}
+
+.reset-form a:hover {
+    text-decoration: underline;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.success {
+    color: #28a745;
+}
+.error {
+    color: #dc3545;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .reset-form {
+        padding: 20px;
+        width: 90%;
+    }
+    .reset-form h1 {
+        font-size: 20px;
+    }
+    .reset-form label {
+        font-size: 16px;
+    }
+    .reset-form input[type="email"] {
+        font-size: 16px;
+    }
+    .reset-form button {
+        font-size: 14px;
+    }
+}

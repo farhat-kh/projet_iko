@@ -72,15 +72,13 @@ const Login = () => {
             </div>
           ))}
 
-       
-
           <button className="login-button" type="submit" disabled={isLoading}>
             {isLoading ? "Connexion..." : "Se connecter"}
           </button>
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <p className="forgot-password">
-            <Link to="/motDePasseOublie">Mot de passe oublié ?</Link>
+            <Link to="/forgot-password">Mot de passe oublié ?</Link>
           </p>
         </form>
       </div>

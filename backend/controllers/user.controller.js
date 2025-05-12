@@ -2,9 +2,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ENV = require('../config/env');
 const createError = require('../middlewares/error');
+const crypto = require('crypto');
 
 // model 
 const Users = require('../models/user.model');
+
+// nodemailer
+const {sendEmail} = require('../services/nodemailer');
 
 // ajouter un utilisateur
 const postUser = async (req, res, next) => {
@@ -89,6 +93,53 @@ try {
 }
 };
 
+// mettre a jour le mot de passe
+const forgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await Users.findOne({ email});
+        if (!user) return next(createError(404, "email non trouvé"));
+
+        const token = crypto.randomBytes(32).toString("hex");
+        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+        user.resetToken = hashedToken;
+        user.resetTokenExpiration = Date.now() + 60 * 60 * 1000; 
+        await user.save();
+
+        await sendEmail(user, token);
+        res.status(200).json({ message: "Email de réinitialisation envoyé avec succès" });
+    } catch (error) {
+        return next(createError(500, error.message));
+        
+    }
+}
+// réinitialiser le mot de passe
+const resetPassword = async (req, res, next) => {
+    try {
+        const token = req.params.token;
+        const {newPassword} = req.body;
+
+        if(!newPassword || newPassword.length < 12) {
+            return next(createError(400, "le mot de passe doit contenir au moins 12 caractères"));
+        }
+        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+        const user = await Users.findOne({
+            resetToken: hashedToken,
+            resetTokenExpiration: { $gt: Date.now() }
+        });
+        if (!user) return next(createError(400, "Token invalide ou expiré"));
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        user.resetToken = undefined;
+        user.resetTokenExpiration = undefined;
+        await user.save();
+        res.status(200).json({ message: "Mot de passe réinitialisé avec succès" });
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+}
+
+
 // Désactiver un utilisateur 
 const deleteUser = async (req, res, next) => {
     try {
@@ -167,6 +218,8 @@ postUser,
 getAllUsers,
 getUser,
 sign,
+forgotPassword,
+resetPassword,
 deleteUser,
 logoutUser,
 updateUser

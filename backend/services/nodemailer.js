@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const ENV = require('../config/env');
-console.log(ENV.EMAIL_PASS,ENV.EMAIL_PASS);
+
 
 const transporter = nodemailer.createTransport({
     // configuration de server de l'envoi de mail SMTP
@@ -25,14 +25,18 @@ transporter.verify((error, success) => {
 
 const sendEmail = async(user, token) => {
     try {
-        const verificationLink = `${ENV.NOM_DOMAIN}/${token}`;
+        const verificationLink = `http://localhost:5173/reset-password/${token}`;
 
         const mailOptions = {
             from: ENV.EMAIL_PASS,
             to: user.email,
-            subject: 'Vérification de compte',
-            // text: 'Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant :',
-            html: `<p>Bonjour, veuillez vérifier votre compte en cliquant sur le lien suivant : <a href="${verificationLink}">Vérifier mon compte</a></p>`
+            subject: 'Réinitialisation de mot de passe',
+            
+            html: `<p>Bonjour ${user.nom},</p>
+            <p> Cliquez sur le lien suivant pour réinitialiser votre mot de passe :</p>
+            <a href="${verificationLink}">${verificationLink}</a>
+            <p> Ce lien expirera dans 1 heure.</p>
+            `
         };
         console.log('Envoi de l\'email à:', user.email);
         await transporter.sendMail(mailOptions);
@@ -43,4 +47,6 @@ const sendEmail = async(user, token) => {
     }
 };
 
-module.exports = sendEmail;
+module.exports = {
+    sendEmail
+};
