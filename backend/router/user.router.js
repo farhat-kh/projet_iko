@@ -14,6 +14,8 @@ const userController = require("../controllers/user.controller");
 // ROUTES
 router.post("/register", userController.postUser);
 router.post('/login' , userController.sign );
+router.put("/forgot-password", userController.forgotPassword);
+router.put("/reset-password/:token", userController.resetPassword);
 router.get("/logout", verifieToken, userController.logoutUser);
 
 router.get("/all", userController.getAllUsers);

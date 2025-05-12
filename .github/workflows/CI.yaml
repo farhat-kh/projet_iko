@@ -1,0 +1,63 @@
+# name: CI Pipeline - Fullstack App
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build-test:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '20'
+
+#       # === BACKEND ===
+#       - name: Install backend dependencies
+#         working-directory: backend
+#         run: npm ci
+
+#       - name: Lint backend
+#         working-directory: backend
+#         run: npm run lint
+
+#       - name: Test backend
+#         working-directory: backend
+#         run: npm test
+
+#       - name: Build backend
+#         working-directory: backend
+#         run: npm run build || echo "Pas de build côté backend"
+
+#       # === FRONTEND ===
+#       - name: Install frontend dependencies
+#         working-directory: frontend
+#         run: npm ci
+
+#       - name: Lint frontend
+#         working-directory: frontend
+#         run: npm run lint
+
+#       - name: Test frontend
+#         working-directory: frontend
+#         run: npm test
+
+#       - name: Build frontend
+#         working-directory: frontend
+#         run: npm run build
+
+#       # === NOTIFICATION SIMULÉE ===
+#       - name: ✅ Ready to deploy
+#         run: echo "Le build est terminé avec succès. Prêt à déployer en staging."

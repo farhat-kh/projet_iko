@@ -7,6 +7,8 @@ import Contact from "./pages/Contact";
 import Login from "./pages/pageAuth/Login";
 import Register from "./pages/pageAuth/Register";
 import Compte from "./pages/pageAuth/Compte";
+import MotDePasseOublie from "./pages/MotDePasseOublie";
+import ResetPassword from "./pages/ResetPassword";
 import Panier from "./pages/Panier";
 import APropos from "./pages/APropos";
 import Categories from "./pages/Categories";
@@ -41,6 +43,8 @@ function App() {
         </Route>
           <Route path="/compte" element={<Compte />} />
           <Route path="/panier" element={<Panier />} />
+          <Route path="/forgot-password" element={<MotDePasseOublie />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Routes privées (auth requise) */}
         <Route element={<PrivateRouter />}>
