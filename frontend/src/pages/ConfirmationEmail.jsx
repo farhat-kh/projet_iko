@@ -4,7 +4,7 @@ import "../styles/confirmationEmail.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router";
+
 
 const ConfirmationEmail = () => {
   
