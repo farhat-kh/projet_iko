@@ -26,7 +26,7 @@ const Login = () => {
       
     } catch (error) {
       console.error("Erreur lors de la connexion :", error)
-      setErrorMessage("identifiants incorrects")
+      setErrorMessage(error.message)
     }
   }
 

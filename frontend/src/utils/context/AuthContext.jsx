@@ -6,6 +6,7 @@ import URLS from '../constants/Api'
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
+  
   const [auth, setAuth] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
@@ -27,8 +28,8 @@ export const AuthProvider = ({ children }) => {
         navigate(redirect)
       }
     } catch (error) {
-      console.error("Erreur lors de la connexion :", error)
-      throw new Error("mail ou mot de passe incorrect")
+      const message = error?.response?.data?.error?.message || "Une erreur s'est produite lors de la connexion."
+      throw new Error(message);
     } finally {
       setIsLoading(false)
     }
@@ -39,9 +40,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_REGISTER, formData);
       if (status === 201) {
-        localStorage.setItem("auth", JSON.stringify(data));
-        setAuth(data);
-        navigate("/compte");
+        return { success: true };
+        navigate("/login");
       }
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error);
@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAuth(null)
     localStorage.removeItem("auth")
+    cookies.remove()
     navigate("/")
   }
 

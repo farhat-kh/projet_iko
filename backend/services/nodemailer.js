@@ -47,6 +47,32 @@ const sendEmail = async(user, token) => {
     }
 };
 
+const sendVerificationEmail = async (user, token) => {
+    try {
+        const verificationLink = `http://localhost:8000/api/user/verify-email/${token}`;
+        const mailOptions = {
+            from: ENV.EMAIL_USER,
+            to: user.email,
+            subject: 'Vérification de votre compte',
+            html: `<p>Bonjour ${user.nom},</p>
+            <p>Merci de vous être inscrit sur notre site. Veuillez cliquer sur le lien ci-dessous pour vérifier votre adresse e-mail :</p>
+            <a href="${verificationLink}">${verificationLink}</a>
+            <p>Ce lien expirera dans 1 heure.</p>
+            <p>Si vous n'avez pas créé de compte, veuillez ignorer cet e-mail.</p>
+            <p>Cordialement,</p>
+            <p>L'équipe de notre site</p>
+            `
+        };
+        console.log('Envoi de l\'email de vérification à:', user.email);
+        await transporter.sendMail(mailOptions);
+        console.log('Email de vérification envoyé avec succès');
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'email de vérification:', error);
+        throw error;
+        
+    }
+}
 module.exports = {
-    sendEmail
+    sendEmail,
+    sendVerificationEmail
 };

@@ -33,19 +33,21 @@ const Register = () => {
       setError("Le mot de passe doit contenir au moins 12 caractères.")
       return
     }
-    if (telephone && !/^\d{10}$/.test(user.telephone)) {
-      setError("Le numéro de téléphone doit contenir 10 chiffres.")
-      return
-    }
+   
     if (user.nom && user.nom.length < 2) {
       setError("Le nom doit contenir au moins 2 caractères.")
       return
     }
 
     try {
-      await register(user)
-      setMessage("Inscription réussie !")
-      setError("")
+      const response = await register(user);
+      if(response.success) {
+        setMessage("Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.")
+        setError("")
+        setTimeout(() => {
+          navigate("/login")
+        }, 3000)
+      }
     } catch (error) {
       setError("Erreur lors de l'inscription. Veuillez réessayer.")
       setMessage("")

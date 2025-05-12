@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const Users = require('../models/user.model');
 
 // nodemailer
-const {sendEmail} = require('../services/nodemailer');
+const {sendEmail, sendVerificationEmail} = require('../services/nodemailer');
 
 // ajouter un utilisateur
 const postUser = async (req, res, next) => {
@@ -31,9 +31,12 @@ try {
         email,
         password: hashedPassword,
         role,
-        isVerified: true // ✅ déjà vérifié car pas d'envoi d'email
+        isVerified: false,
     });
-
+    // Générer un token de vérification
+    const token = jwt.sign({ id: user._id }, ENV.TOKEN, { expiresIn: '1h' });
+    // Envoyer l'email de vérification
+    await sendVerificationEmail(user, token);
     res.status(201).json({
         message: "Utilisateur créé avec succès.",
         user: { id: user._id, nom: user.nom, prenom: user.prenom, email: user.email }
@@ -73,7 +76,7 @@ try {
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
     if(!user.isActive) return next(createError(403, "ce compte est desactive"));
     if(!isPasswordCorrect) return next(createError(403, "wrong password"));
-
+    if(!user.isVerified) return next(createError(403, "veuillez verifier votre compte avant de vous connecter"));
     const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
     const {password, ...userWithoutPassword} = user._doc;
 
@@ -138,7 +141,21 @@ const resetPassword = async (req, res, next) => {
         next(createError(500, error.message));
     }
 }
-
+// verifier l'email
+const verifyEmail = async (req, res, next) => {
+    try {
+        const { token } = req.params;
+        const decoded = jwt.verify(token, ENV.TOKEN);
+        const user = await Users.findById(decoded.id);
+        if (!user) return next(createError(404, "Utilisateur non trouvé"));
+        if (user.isVerified) return next(createError(400, "Utilisateur déjà vérifié"));
+        user.isVerified = true;
+        await user.save();
+        res.redirect(`http://localhost:5173/confirmation-email`);
+    } catch (error) {
+        return next(createError(500, error.message));
+    }
+}
 
 // Désactiver un utilisateur 
 const deleteUser = async (req, res, next) => {
@@ -220,6 +237,7 @@ getUser,
 sign,
 forgotPassword,
 resetPassword,
+verifyEmail,
 deleteUser,
 logoutUser,
 updateUser
