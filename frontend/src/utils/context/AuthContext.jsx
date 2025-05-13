@@ -51,10 +51,11 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const logout = () => {
+  const logout = async () => {
+    const { data, status } = await AXIOS_INSTANCE.get(URLS.GET_LOGOUT);
     setAuth(null)
     localStorage.removeItem("auth")
-    cookies.remove()
+    cookies.remove("access_token")
     navigate("/")
   }
 
