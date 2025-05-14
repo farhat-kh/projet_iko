@@ -2,16 +2,17 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import React from "react";
 import { Outlet } from "react-router";
+import "./layout.css";
 
 const Layout = () => {
   return (
-    <main>
+    <div className="layout-wrapper">
     <Navbar/>
-    <section>
+    <main className="layout-content">
       <Outlet/>
-    </section>
+    </main>
     <Footer/>
-  </main>
+  </div>
   );
 };
 
