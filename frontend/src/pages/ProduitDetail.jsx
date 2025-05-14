@@ -11,8 +11,13 @@ const ProduitDetail = () => {
   const [produit, setProduit] = useState(null);
   const [quantite, setQuantite] = useState(1);
   const [showToast, setShowToast] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const { addToCart } = useCart();
 
+
+  
+  const { cart } = useCart();
+  
   useEffect(() => {
     const fetchProduit = async () => {
       try {
@@ -22,9 +27,14 @@ const ProduitDetail = () => {
         console.error("Erreur lors du chargement du produit", error);
       }
     };
-
+    
     fetchProduit();
   }, [id]);
+  
+  if (!produit) return <div>Chargement...</div>;
+  const cartItem = cart.find((item) => item._id === produit._id);
+  const dejaDansLePanier = cartItem ? cartItem.quantity : 0;
+  const stockRestant = produit.quantite - dejaDansLePanier;
 
   const handleQuantiteChange = (val) => {
     setQuantite((prev) => {
@@ -33,11 +43,17 @@ const ProduitDetail = () => {
     });
   };
   const handleAddToCart = () => {
+    const totalSouhaite = quantite + dejaDansLePanier;
+
+    if(totalSouhaite > stockRestant) {
+      setToastError(`Stock insuffisant. il reste ${stockRestant} unités.`);
+     
+      return;
+    }
     addToCart(produit, quantite);
     setShowToast(true);
   };
 
-  if (!produit) return <div>Chargement...</div>;
 
   return (
     <>
@@ -45,6 +61,13 @@ const ProduitDetail = () => {
         <Toast
           message="Produit ajouté au panier"
           onClose={() => setShowToast(false)}
+        />
+      )}
+      {toastError && (
+        <Toast
+          message={toastError}
+          onClose={() => setToastError(false)}
+          variant="danger"
         />
       )}
     <Container className="my-5">
@@ -61,10 +84,28 @@ const ProduitDetail = () => {
           <h4 className="text-muted">{produit.prix} €</h4>
 
           <div className="my-3 d-flex align-items-center">
-            <Button variant="outline-secondary" onClick={() => handleQuantiteChange(-1)}>-</Button>
+            <Button
+             variant="outline-secondary"
+             onClick={() => 
+             handleQuantiteChange(-1)}
+             >
+            -
+            </Button>
             <span className="mx-3">{quantite}</span>
-            <Button variant="outline-secondary" onClick={() => handleQuantiteChange(1)}>+</Button>
+            <Button 
+            variant="outline-secondary" 
+            onClick={() => handleQuantiteChange(1)}
+            disabled={quantite >= stockRestant}
+
+            >
+            +
+            </Button>
           </div>
+
+          {quantite >= produit.quantite && (
+            <p className="text-danger">Stock limité à {stockRestant} unités
+            </p>
+          )}
 
           <Button variant="dark" className="mb-4" onClick={handleAddToCart}>
             Ajouter au panier

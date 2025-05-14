@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useCart } from '../utils/context/CartContext'
 import { AuthContext } from '../utils/context/AuthContext'
 import { useNavigate } from 'react-router'
 import panierVide from "../assets/Panier_vide.png"
 import { FaTrashAlt } from 'react-icons/fa'
+import Toast from '../components/Toast'
 import "../styles/panier.css"
 
 
@@ -14,8 +15,19 @@ const  Panier =()=> {
   const { auth } = useContext(AuthContext)
   const { cart, removeFromCart, addToCart, clearCart, totalPrice } = useCart()
   const navigate = useNavigate()
+  const [toastError, setToastError] = useState("");
 
-  const handleAdd = (item) => addToCart(item, 1)
+
+  const handleAdd = (item) => {
+    if(item.quantity >= item.quantite){
+      setToastError(`Stock limité à ${item.quantite} unités.`);
+      return;
+    }
+    addToCart(item, 1)
+  }
+
+
+
   const handleRemove = (item) => {
     if (item.quantity > 1) {
       addToCart(item, -1)
@@ -48,6 +60,14 @@ const  Panier =()=> {
     )
   }
     return (
+      <> 
+      {toastError && (
+        <Toast
+          message={toastError}
+          onClose={() => setToastError("")}
+          variant="danger"
+        />
+      )}
       <div className="panier-wrapper">
       <div className="panier-left">
         <h3>MON PANIER</h3>
@@ -73,9 +93,23 @@ const  Panier =()=> {
               <p>{item.prix} €</p>
             </div>
             <div className="panier-quantite">
-              <button onClick={() => handleRemove(item)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => handleAdd(item)}>+</button>
+              <div className="btn-group">
+              <button 
+              onClick={() => handleRemove(item)}>
+              -
+              </button>
+              <span>{item.quantity}
+              </span>
+              <button 
+              onClick={() => handleAdd(item)}
+              disabled={item.quantity >= item.quantite}
+              >
+              +
+              </button>
+              </div>
+              {item.quantity >= item.quantite && (
+                <span className="stock-limit-msg">Stock max atteint</span>
+              )}
             </div>
             <div className="panier-total">{(item.prix * item.quantity).toFixed(2)} €</div>
             <div className="panier-delete">
@@ -100,6 +134,7 @@ const  Panier =()=> {
         </button>
       </div>
     </div>
+   </>
   );
     
 }

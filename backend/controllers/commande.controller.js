@@ -1,18 +1,52 @@
 const Commande = require('../models/commande.model');
+const Produit = require('../models/produit.model');
 const createError = require('../middlewares/error');
 
 // Creer une commande 
 const createCommande = async (req, res, next) => {
     try {
-        const {userId, produits, status = 'en cours',addresseLivraison, moyenPaiement = 'stripe', paiementEffectue = false,dateCommande} = req.body;
+        const {userId, 
+            produits, 
+            status = 'en cours',
+            addresseLivraison, 
+            moyenPaiement = 'stripe', 
+            paiementEffectue = false,
+            dateCommande
+        } = req.body;
+
         if (!userId || !produits || produits.length === 0) {
             return next(createError(400, 'champs manquants ou produits invalides'));
         }
-        const total = produits.reduce((acc, p) => acc + (p.prixUnitaire * p.quantite), 0);
+        
+        let total = 0;
 
+        const produitsValidés = [];
+
+        for (const p of produits) {
+            const produitDB = await Produit.findById(p.produitId);
+            if (!produitDB) {
+                return next(createError(404, `Produit non trouvé:${p.produitDBId}`));
+            }
+        
+        if(produitDB.quantite < p.quantite) {
+            return next(createError(400, `Quantité insuffisante pour le produit ${produitDB.nom}`));
+        }
+
+        produitDB.quantite -= p.quantite;
+        await produitDB.save();
+
+        total += produitDB.prix * p.quantite;
+        produitsValidés.push({
+            produitId: produitDB._id,
+            prixUnitaire: produitDB.prix,
+            quantite: p.quantite,
+        });
+
+        }
+        
         const commande = await Commande.create({
             userId,
-            produits,
+            produits : produitsValidés,
             total,
             status,
             addresseLivraison,
@@ -21,7 +55,6 @@ const createCommande = async (req, res, next) => {
             dateCommande
         });
 
-        const savedCommande = await commande.save();
         res.status(201).json({message: "Commande créée", commande});
 
 

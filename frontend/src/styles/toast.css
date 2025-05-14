@@ -11,6 +11,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     animation: fadeInOut 3s ease-in-out forwards;
 }
+.custom-toast.success {
+    background-color: #4CAF50; 
+}
+.custom-toast.danger {
+    background-color: #f44336; 
+}
 
 @keyframes fadeInOut {
     0% {opacity: 0; transform: translateY(20px);}
