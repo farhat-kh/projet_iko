@@ -101,10 +101,7 @@
     flex: 2;
 }
 
-/* .panier-item-info h3  {
-    font-size: 18px;
-    margin: 0;
-} */
+
 .panier-item-info h4 {
     font-size: 16px;
     margin: 0.5rem ;
@@ -115,20 +112,21 @@
     font-size: 14px;
     color: #666;
 }
-/* .panier-item-img {
-    flex: 0 0 100px;
-} */
-
 
 
 .panier-quantite {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
     gap: 0.5rem;
-    flex: 1;
+    /* flex: 1; */
 }
-
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 .panier-quantite button {
     display: flex;
     justify-content: center;
@@ -145,7 +143,12 @@
     cursor: pointer;
     border-radius: 5px;
 }
-
+.stock-limit-msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
+}
 .panier-quantite span {
     font-size: 16px;
     min-width: 24px;

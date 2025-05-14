@@ -2,7 +2,7 @@ import React, { useEffect} from "react";
 import "../styles/toast.css";
 
 
-const Toast = ({ message, onClose}) => {
+const Toast = ({ message, onClose, variant = "success"}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -12,7 +12,7 @@ const Toast = ({ message, onClose}) => {
   }, [onClose]);
 
   return (
-    <div className="custom-toast">
+    <div className={`custom-toast ${variant}`}>
       {message}
     </div>
   );
