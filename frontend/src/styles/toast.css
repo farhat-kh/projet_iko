@@ -1,0 +1,19 @@
+.custom-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99999;
+    padding: 12px 24px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    animation: fadeInOut 3s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {opacity: 0; transform: translateY(20px);}
+    10%, 90% {opacity: 1; transform: translateY(0); }
+    100% {opacity: 0; transform: translateY(20px);}
+}

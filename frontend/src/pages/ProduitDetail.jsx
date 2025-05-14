@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import { useCart } from "../utils/context/CartContext";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import Toast from "../components/Toast";
 
 
 const ProduitDetail = () => {
-  const { id } = useParams(); // récupère l'id depuis l'URL
+  const { id } = useParams(); 
   const [produit, setProduit] = useState(null);
   const [quantite, setQuantite] = useState(1);
+  const [showToast, setShowToast] = useState(false);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduit = async () => {
@@ -28,10 +32,21 @@ const ProduitDetail = () => {
       return next < 1 ? 1 : next;
     });
   };
+  const handleAddToCart = () => {
+    addToCart(produit, quantite);
+    setShowToast(true);
+  };
 
   if (!produit) return <div>Chargement...</div>;
 
   return (
+    <>
+     {showToast && (
+        <Toast
+          message="Produit ajouté au panier"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     <Container className="my-5">
       <Row>
         <Col md={6}>
@@ -51,7 +66,7 @@ const ProduitDetail = () => {
             <Button variant="outline-secondary" onClick={() => handleQuantiteChange(1)}>+</Button>
           </div>
 
-          <Button variant="dark" className="mb-4">
+          <Button variant="dark" className="mb-4" onClick={handleAddToCart}>
             Ajouter au panier
           </Button>
 
@@ -60,6 +75,7 @@ const ProduitDetail = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };
 
