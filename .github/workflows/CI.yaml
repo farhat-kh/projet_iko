@@ -1,41 +1,41 @@
-# name: CI Pipeline - Fullstack App
+name: CI Pipeline - Fullstack App
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   build-test:
-#     runs-on: ubuntu-latest
-#     defaults:
-#       run:
-#         shell: bash
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: '20'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
 #       # === BACKEND ===
-#       - name: Install backend dependencies
-#         working-directory: backend
-#         run: npm ci
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
 
 #       - name: Lint backend
 #         working-directory: backend
 #         run: npm run lint
 
-#       - name: Test backend
-#         working-directory: backend
-#         run: npm test
+      - name: Test backend
+        working-directory: backend
+        run: npm test
 
 #       - name: Build backend
 #         working-directory: backend
