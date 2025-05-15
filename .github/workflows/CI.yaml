@@ -33,7 +33,7 @@ jobs:
 #         working-directory: backend
 #         run: npm run lint
 
-      - name: Test backend
+      - name: Run  tests with Jest
         working-directory: backend
         run: npm test
 

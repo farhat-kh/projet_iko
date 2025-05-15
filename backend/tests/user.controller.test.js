@@ -1,19 +1,22 @@
-import { vi, describe, expect, it, test, Boolean} from "vitest";
-import { userController } from "../controllers/user.controller.js";
+const userController = require("../controllers/user.controller");
+const Users = require("../models/user.model");
 
-import { Users } from "../models/user.model.js";
+jest.mock("../models/user.model");
+
+describe("userController.getAllUsers", () => {
+  it("devrait retourner tous les utilisateurs", async () => {
+    const mockUsers = [{ nom: "Jean" }, { nom: "Claire" }];
+    Users.find.mockResolvedValue(mockUsers);
+
+    const req = {};
+    const res = {
+       status: jest.fn().mockReturnThis(),
+       json: jest.fn()
+};
 
 
-describe("userController", () => {
-    it("getAllUsers", () => {
-        const getAllUsers = vi.spyOn(Users, "find");
-        userController.getAllUsers();
-        expect(getAllUsers).toHaveBeenCalled();
-    });
+    await userController.getAllUsers(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(mockUsers);
+  });
 });
-
-test("getUser", () => {
-    const getUser = vi.spyOn(Users, "findById");
-    userController.getUser();
-    expect(getUser).toHaveBeenCalled();
-})
