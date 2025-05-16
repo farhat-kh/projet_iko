@@ -52,11 +52,15 @@ export const AuthProvider = ({ children }) => {
 
 
   const logout = async () => {
-    const { data, status } = await AXIOS_INSTANCE.get(URLS.GET_LOGOUT);
+    try {
+    await AXIOS_INSTANCE.get(URLS.GET_LOGOUT, {withCredentials: true});
     setAuth(null)
     localStorage.removeItem("auth")
-    cookies.remove("access_token")
+    setAuth(null)
     navigate("/")
+    } catch (error) {
+      console.error("Erreur lors de la deconnexion :", error)
+    }
   }
 
   return (

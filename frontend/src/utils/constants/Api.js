@@ -1,7 +1,7 @@
 const URLS = {
-    POST_REGISTER: "/api/user/register",
-    POST_LOGIN: "/api/user/login",
-    GET_LOGOUT: "/api/user/logout"
+    POST_REGISTER: "/user/register",
+    POST_LOGIN: "/user/login",
+    GET_LOGOUT: "/user/logout"
 
 }
 
