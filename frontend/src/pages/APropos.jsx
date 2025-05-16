@@ -1,16 +1,5 @@
-// import React from 'react'
-
-// function APropos() {
-//   return (
-//     <div>APropos</div>
-//   )
-// }
-
-// export default APropos
 import React from "react";
-import "../styles/apropos.css"; // Import du fichier CSS
-// import { Nav } from "react-bootstrap";
-
+import "../styles/apropos.css"; 
 import logo from "../assets/logo.png";
 import '../styles/apropos.css';
 import '../styles/global.css';

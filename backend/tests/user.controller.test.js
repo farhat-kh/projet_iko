@@ -41,7 +41,7 @@ test("sign renvoie une erreur si email non trouvé", async () => {
   await userController.sign(req, res, next);
   expect(next).toHaveBeenCalledWith(expect.objectContaining({
     status: 404,
-    message: "user not found"
+    message: "utilisateur non trouvé"
   }))
 })
 

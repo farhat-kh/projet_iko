@@ -71,11 +71,11 @@ try {
 const sign = async (req, res , next) => {
 try {
     const user = await Users.findOne({ email: req.body.email });
-    if(!user) return next(createError(404, "user not found"));
+    if(!user) return next(createError(404, "utilisateur non trouvé"));
 
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
     if(!user.isActive) return next(createError(403, "ce compte est desactive"));
-    if(!isPasswordCorrect) return next(createError(403, "wrong password"));
+    if(!isPasswordCorrect) return next(createError(403, "mot de passe incorrect"));
     if(!user.isVerified) return next(createError(403, "veuillez verifier votre compte avant de vous connecter"));
     const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
     const {password, ...userWithoutPassword} = user._doc;
@@ -84,6 +84,7 @@ try {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
+        maxAge: 24 * 60 * 60 * 1000
     });
     res.status(200).json({
         message: "User signed in successfully",
