@@ -92,7 +92,7 @@ try {
     });
 
 } catch (error) {
-    console.log("error", error.message);
+   
     res.status(500).json({ message: error.message });
 }
 };
