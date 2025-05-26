@@ -1,0 +1,226 @@
+/* .commande-wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.commande-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.commande-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.commande-form,
+.commande-summary {
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.commande-form h3,
+.commande-summary h3 {
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn-valider,
+.btn-retour {
+  padding: 0.8rem 1.5rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.btn-retour {
+  background-color: #888;
+}
+
+.btn-valider:hover,
+.btn-retour:hover {
+  opacity: 0.9;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+ */
+
+.commande-wrapper {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.commande-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0d0d0d;
+}
+
+.commande-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .commande-content {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
+
+.commande-form,
+.commande-summary {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.commande-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.commande-form h3,
+.commande-summary h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.commande-form p,
+.commande-summary p {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+}
+
+.double-inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.double-inputs .form-group {
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+ul li strong {
+  font-size: 1.1rem;
+  color: #000;
+}
+
+.commande-summary p:last-of-type {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+}
+
+.btn-valider,
+.btn-retour {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-valider {
+  background-color: #0d1b2a;
+  color: white;
+  margin-top: 1.5rem;
+}
+
+.btn-valider:hover {
+  background-color: #1a2b3c;
+}
+
+.btn-retour {
+  margin-top: 1rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.btn-retour:hover {
+  background-color: #e1e1e1;
+}
+

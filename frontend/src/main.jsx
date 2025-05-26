@@ -8,8 +8,18 @@ import './styles/global.css';
 import { AuthProvider } from './utils/context/AuthContext';
 import { CartProvider } from './utils/context/CartContext.jsx';
 
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+
+
+
+const initialOptions = {
+  'client-id': import.meta.env.VITE_PAYPAL_CLIENT_ID,
+  currency: 'EUR',
+};
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode> 
+    <PayPalScriptProvider options={initialOptions}>
     <BrowserRouter>
     <AuthProvider>
       <CartProvider>
@@ -17,5 +27,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </CartProvider>
     </AuthProvider>
     </BrowserRouter>
+    </PayPalScriptProvider>
   </React.StrictMode>
 );

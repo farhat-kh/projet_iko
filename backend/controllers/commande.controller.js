@@ -5,10 +5,11 @@ const createError = require('../middlewares/error');
 // Creer une commande 
 const createCommande = async (req, res, next) => {
     try {
+       
         const {userId, 
             produits, 
             status = 'en cours',
-            addresseLivraison, 
+            adresseLivraison, 
             moyenPaiement = 'stripe', 
             paiementEffectue = false,
             dateCommande
@@ -49,7 +50,7 @@ const createCommande = async (req, res, next) => {
             produits : produitsValidés,
             total,
             status,
-            addresseLivraison,
+            adresseLivraison,
             moyenPaiement,
             paiementEffectue,
             dateCommande
@@ -59,6 +60,7 @@ const createCommande = async (req, res, next) => {
 
 
     } catch (error) {
+        console.error("Erreur lors de la création de la commande:", error);
         next(createError(500,error.message));
     }
 }

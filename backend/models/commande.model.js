@@ -44,8 +44,7 @@ const commandeSchema = new mongoose.Schema({
     },
     moyenPaiement: {
         type: String,
-        enum: ['carte', 'paypal', 'virement', 'especes','stripe'],
-        default: 'stripe',
+        enum: ['carte', 'paypal'],
         required: false,
         
     },

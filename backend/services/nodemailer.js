@@ -38,9 +38,9 @@ const sendEmail = async(user, token) => {
             <p> Ce lien expirera dans 1 heure.</p>
             `
         };
-        console.log('Envoi de l\'email à:', user.email);
+        
         await transporter.sendMail(mailOptions);
-        console.log('Email envoyé avec succès');
+        
     } catch (error) {
         console.error('Erreur lors de l\'envoi de l\'email:', error);
         throw error;
@@ -63,9 +63,9 @@ const sendVerificationEmail = async (user, token) => {
             <p>L'équipe de notre site</p>
             `
         };
-        console.log('Envoi de l\'email de vérification à:', user.email);
+        
         await transporter.sendMail(mailOptions);
-        console.log('Email de vérification envoyé avec succès');
+       
     } catch (error) {
         console.error('Erreur lors de l\'envoi de l\'email de vérification:', error);
         throw error;

@@ -11,6 +11,8 @@ import MotDePasseOublie from "./pages/MotDePasseOublie";
 import ConfirmationEmail from "./pages/ConfirmationEmail";
 import ResetPassword from "./pages/ResetPassword";
 import Panier from "./pages/Panier";
+import Commande from "./pages/Commande";
+import ConfirmationCommande from "./pages/ConfirmationCommande";
 import APropos from "./pages/APropos";
 import Categories from "./pages/Categories";
 import CategoriePage from "./pages/CategoriePage";
@@ -44,6 +46,8 @@ function App() {
         </Route>
           <Route path="/compte" element={<Compte />} />
           <Route path="/panier" element={<Panier />} />
+          <Route path="/commande" element={<Commande />} />
+          <Route path="/confirmation-commande" element={<ConfirmationCommande />} />
           <Route path="/forgot-password" element={<MotDePasseOublie />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/confirmation-email" element={<ConfirmationEmail />} />
