@@ -19,7 +19,7 @@ try {
     }
 
     // récupérer les données de l'utilisateur envoyées dans le corps de la requête
-    const { nom, prenom, email, password, role = "user" } = req.body;
+    const { nom, prenom, email, password, role = "user", telephone } = req.body;
 
     // hachage du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -31,6 +31,7 @@ try {
         email,
         password: hashedPassword,
         role,
+        telephone,
         isVerified: false,
     });
     // Générer un token de vérification
@@ -96,6 +97,38 @@ try {
     res.status(500).json({ message: error.message });
 }
 };
+
+// modifier le mot de passe actuel avec un nouveau mot de passe
+
+const updatePassword = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const { ancienMotDePasse, nouveauMotDePasse } = req.body;
+        if (!ancienMotDePasse || !nouveauMotDePasse) {
+            return next(createError(400, "Veuillez fournir l'ancien mot de passe et le nouveau "));
+        }
+
+        const user = await Users.findById(userId);
+        if (!user) return next(createError(404, "Utilisateur non trouvé"));
+        if(req.user.id !== user._id.toString()) {
+            return next(createError(403, "Accès refusé"));
+        }
+        const isPasswordCorrect = await bcrypt.compare(ancienMotDePasse, user.password);
+        if(!isPasswordCorrect) {
+            return next(createError(403, "Mot de passe actuel incorrect"));
+        }
+        if(nouveauMotDePasse.length < 12) {
+            return next(createError(400, "Le nouveau mot de passe doit contenir au moins 12 caractères"));
+        }
+        const hashedNewPassword = await bcrypt.hash(nouveauMotDePasse, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+        res.status(200).json({ message: "Mot de passe mis à jour avec succès" });
+    } catch (error) {
+        return next(createError(500, error.message));
+        
+    }
+}
 
 // mettre a jour le mot de passe
 const forgotPassword = async (req, res, next) => {
@@ -236,6 +269,7 @@ postUser,
 getAllUsers,
 getUser,
 sign,
+updatePassword,
 forgotPassword,
 resetPassword,
 verifyEmail,

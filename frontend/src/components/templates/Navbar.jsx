@@ -12,10 +12,10 @@ function NavbarComponent() {
 
   const handleRedirectCompte = () => {
     if (!auth) {
-      localStorage.setItem("redirectAfterLogin", "/compte");
+      localStorage.setItem("redirectAfterLogin", "/mon-compte");
       navigate("/login");
     } else {
-      navigate("/compte");
+      navigate("/mon-compte");
     }
   };
 

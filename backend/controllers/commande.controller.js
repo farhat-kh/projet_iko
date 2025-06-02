@@ -10,7 +10,7 @@ const createCommande = async (req, res, next) => {
             produits, 
             status = 'en cours',
             adresseLivraison, 
-            moyenPaiement = 'stripe', 
+            moyenPaiement = 'paypal', 
             paiementEffectue = false,
             dateCommande
         } = req.body;
@@ -95,7 +95,7 @@ const getCommandById = async (req, res, next) => {
 // recuperer les commandes d'un utilisateur
 const getCommandesByUser = async (req, res, next) => {
     try {
-        const commandes = await Commande.find({ userId: req.user.id}).populate('produits.produitId', 'nom prix imageUrl').sort({createdAt: -1});
+        const commandes = await Commande.find({ userId: req.user.id}).populate('produits.produitId', 'nom prix ').sort({createdAt: -1});
 
         if(!commandes || commandes.length === 0) return next(createError(404, 'Aucune commande trouvée'));
         res.status(200).json(commandes);
