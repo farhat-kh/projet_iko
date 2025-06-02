@@ -23,7 +23,7 @@ const PayPalButton = ({ total, onSuccess, livraisonData, panierData }) => {
                     quantite: item.quantity,
                     prixUnitaire: item.prix,
                 })),
-                adresseLivraison: `${livraisonData.nom}, ${livraisonData.adresse}, ${livraisonData.ville}, ${livraisonData.codePostal}`,
+                adresseLivraison: `${livraisonData.adresse}, ${livraisonData.ville}, ${livraisonData.codePostal}`,
                 total: numericTotal.toFixed(2),
                 moyenPaiement: "paypal",
                 paiementEffectue: true,

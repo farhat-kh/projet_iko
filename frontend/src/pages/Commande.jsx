@@ -4,6 +4,7 @@ import { AuthContext } from '../utils/context/AuthContext';
 import { useNavigate } from 'react-router';
 import "../styles/commande.css";
 import PayPalButton from '../components/PayPalButton';
+import axios from 'axios';
 
 const Commande = () => {
   const { cart, totalPrice, clearCart } = useCart();
@@ -26,7 +27,7 @@ const Commande = () => {
       setFormData({
         nom: auth.user.nom || '',
         email: auth.user.email || '',
-        telephone: '',
+        telephone: auth.user.telephone || '',
         adresse: '',
         ville: '',
         codePostal: ''
@@ -39,8 +40,18 @@ const Commande = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSuccessPayment = (details) => {
+  const handleSuccessPayment = async (details) => {
    
+    if(!auth.user.telephone && !formData.telephone) {
+      try {
+        await axios.put(`/api/user/${auth.user._id}`, {
+          telephone: formData.telephone
+        });
+      } catch (error) {
+        console.log("Erreur lors de la mise à jour du téléphone :", error);
+        
+      }
+    }
     if (!auth) {
       navigate("/login");
       return;

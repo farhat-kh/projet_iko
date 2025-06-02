@@ -1,0 +1,118 @@
+.compte-container {
+  padding: 2rem;
+  background-color: #f9f8f4;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  color: #1f1f1f;
+}
+
+.compte-actions {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem auto 0;
+  max-width: 700px;
+  flex-wrap: wrap;
+}
+.btn-wrapper {
+  flex: 1;
+  min-width: 160px;
+}
+
+.btn-retour {
+  background-color:#2f6d3e;
+}
+.btn-retour:hover {
+  background-color: #265b34;
+}
+.btn-deconnexion {
+  background-color: #789e87;
+}
+.btn-deconnexion:hover {
+  background-color: #5c7c6b;
+}
+
+.btn-deconnexion,
+.btn-retour {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.compte-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.compte-nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #d6d6d6;
+  padding-bottom: 0.5rem;
+}
+
+.compte-nav button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #444;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.compte-nav button:hover {
+  color: #1f4539;
+}
+
+.compte-nav button.active {
+  color: #1f4539;
+  border-bottom: 2px solid #1f4539;
+}
+
+.compte-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .compte-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-wrapper {
+    width: 100%;
+  }
+
+  .compte-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .compte-nav button {
+    margin: 0.3rem 0;
+  }
+
+  .compte-content {
+    padding: 1rem;
+  }
+}

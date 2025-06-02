@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       if (status === 200) {
         localStorage.setItem("auth", JSON.stringify(data))
         setAuth(data)
-        const redirect = localStorage.getItem("redirectAfterLogin") || "/compte"
+        const redirect = localStorage.getItem("redirectAfterLogin") || "/mon-compte"
         localStorage.removeItem("redirectAfterLogin")
         navigate(redirect)
       }
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout, register, isLoading }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout, register, isLoading }}>
       {children}
     </AuthContext.Provider>
   )

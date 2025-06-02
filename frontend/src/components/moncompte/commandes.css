@@ -1,0 +1,85 @@
+.commandes-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: 'Roboto', sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.commandes-container h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.commande-liste {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.commande-item {
+  gap: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.commande-item p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.commande-item ul {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.commande-item ul li {
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0;
+  font-size: 0.95rem;
+}
+.adresse-livraison p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+
+@media (max-width: 600px) {
+  .commandes-container {
+    padding: 1rem;
+  }
+
+  .commande-item {
+    padding: 1rem;
+    padding: 1rem;
+    gap: 0.3rem;
+  }
+
+  .commande-item p,
+  .commande-item ul li {
+    font-size: 0.9rem;
+
+  }
+
+}
+@media (max-width: 400px) {
+  .commande-item {
+    padding: 0.8rem;
+  }
+  .commande-item p,
+  .commande-item ul li {
+    font-size: 0.8rem;
+  }
+  .commandes-container h3 {
+    font-size: 1.2rem;
+  }
+}
