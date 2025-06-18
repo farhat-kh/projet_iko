@@ -69,7 +69,10 @@ const createCommande = async (req, res, next) => {
 
 const getAllCommandes = async (req, res, next) => {
     try {
-        const commandes = await Commande.find().populate('userId', 'nom prenom email').sort({createdAt: -1});
+        const commandes = await Commande.find()
+        .populate('userId', 'nom prenom email')
+        .populate('produits.produitId', 'nom')
+        .sort({createdAt: -1});
         res.status(200).json(commandes);
     } catch (error) {
         next(createError(500, error.message));

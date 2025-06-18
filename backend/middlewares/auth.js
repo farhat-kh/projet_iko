@@ -4,7 +4,7 @@ const createError = require('./error')
 
 const verifieToken = async (req, res, next) =>{
     // recupere le jeton (token) jwt a partir des cookies de la requete
-    const token = req.cookies.access_token;
+    const token = req.cookies.access_token || req.headers.authorization?.split(' ')[1];
 
     // si le token n'est pas present , on renvoie une erreur (accès refusé)
     if(!token) return next(createError(401,'Access denied'))

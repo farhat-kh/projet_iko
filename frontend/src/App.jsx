@@ -24,6 +24,12 @@ import Privacy from "./pages/Privacy";
 import PrivateRouter from "./utils/helpers/PrivateRouter";
 import PublicRouter from "./utils/helpers/PublicRouter";
 
+// Route administrateur
+import AdminRouter from "./utils/helpers/AdminRouter";
+import Dashboard from "./components/admin/Dashboard";
+import Users from "./components/admin/Users";
+import Messages from "./components/admin/Messages";
+
 function App() {
   return (
     <Routes>
@@ -52,9 +58,18 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/confirmation-email" element={<ConfirmationEmail />} />
 
+        {/* Route administrateur */}
+        <Route element={<AdminRouter />}>
+          <Route path="/admin/" element={<Dashboard />} />
+        </Route>
+        <Route path="/users" element={<Users />} />
+        <Route path="messages" element={<Messages />} />
+
+
         {/* Routes privées (auth requise) */}
         <Route element={<PrivateRouter />}>
          <Route path="/mon-compte" element={<MonCompte />} />
+
         </Route>
       </Route>
 

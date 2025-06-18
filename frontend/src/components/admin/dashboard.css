@@ -1,0 +1,108 @@
+ /* admin dashbord css  */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fb;
+    
+}
+
+/* SIDEBAR  */
+
+.sidebar {
+    width : 220px;
+    background-color: #fff;
+    padding: 1.5rem, 1rem;
+    border-right: 1px solid #ddd;
+    
+}
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #777;
+}
+
+
+.sidebar button {
+    background-color: #f8f9fb;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.sidebar button:hover,
+.sidebar button.active {
+    background-color: #d6eadd;
+    font-weight: 600;
+}
+
+
+/* MAIN DASHBOARD  */
+
+.admin-main {
+    flex: 1;
+    padding: 2rem;
+}
+
+.dashboard-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.dashboard-content h2 {
+  font-size: 1.8rem;
+  color: #1f1f1f;
+  margin-bottom: 1rem;
+}
+
+.dashboard-content p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.dashboard-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background-color: #fff;
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.dashboard-tables .table-placeholder {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
+  text-align: center;
+  color: #777;
+}
