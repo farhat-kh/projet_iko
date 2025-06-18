@@ -1,5 +1,7 @@
 const Message = require("../models/message.model");
 const createError = require("../middlewares/error");
+const nodemailer = require("nodemailer");
+const {envoyerMessage} = require("../services/nodemailer");
 
 
 
@@ -63,13 +65,35 @@ const deleteMessage = async (req, res,next) => {
     }
 }
 
+const repondreMessage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { reponse } = req.body;
+    if(!reponse) return next(createError(400, "Réponse manquante"));
+    const message = await Message.findById(id);
+    if (!message) {
+      return next(createError(404, "Message non trouvé"));
+    }
+    await envoyerMessage(message.email," reponse à votre message sur le site Ikomeubles",reponse);
+    message.repondu = true;
+    await message.save();
+    
+    res.status(200).json({
+      message: "Réponse envoyée avec succès",
+    });
+  } catch (error) {
+    next(createError(500, "Erreur lors de la réponse au message"));
+    
+  }
+}
 
 
 
 module.exports = {
     postMessage,
     getAllMessages,
-    deleteMessage
+    deleteMessage,
+    repondreMessage
 }
 
 

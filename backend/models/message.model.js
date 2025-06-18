@@ -21,7 +21,11 @@ const messageSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    repondu: {
+        type: Boolean,
+        default: false
+    },
 }, {
     timestamps: {
         createdAt: true

@@ -21,10 +21,21 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true)
       const { data, status } = await AXIOS_INSTANCE.post(URLS.POST_LOGIN, formData)
       if (status === 200) {
-        localStorage.setItem("auth", JSON.stringify(data))
-        setAuth(data)
-        const redirect = localStorage.getItem("redirectAfterLogin") || "/mon-compte"
+        const payload = {
+          token: data.token,
+          user: data.user,
+        }
+        localStorage.setItem("auth", JSON.stringify(payload))
+        setAuth(payload)
+
+        const role = data.user?.role;
+        let redirect = "/mon-compte";
+        if(role === "admin" || role === "superadmin") {
+          redirect = "/admin";
+        }
+        redirect = localStorage.getItem("redirectAfterLogin") || redirect;
         localStorage.removeItem("redirectAfterLogin")
+        
         navigate(redirect)
       }
     } catch (error) {

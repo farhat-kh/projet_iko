@@ -89,7 +89,9 @@ try {
     });
     res.status(200).json({
         message: "User signed in successfully",
-        user: userWithoutPassword
+        user: userWithoutPassword,
+        token
+
     });
 
 } catch (error) {

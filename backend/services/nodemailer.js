@@ -72,7 +72,24 @@ const sendVerificationEmail = async (user, token) => {
         
     }
 }
+
+const envoyerMessage = async (to, subject, message) => {
+    try {
+        await transporter.sendMail({
+            from: ENV.EMAIL_USER,
+            to,
+            subject,
+            text: message,
+            html: `<p>${message}</p>`
+        });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi du message:', error);
+        throw error;
+        
+    }
+}
 module.exports = {
     sendEmail,
-    sendVerificationEmail
+    sendVerificationEmail,
+    envoyerMessage
 };

@@ -49,7 +49,7 @@ const Contact = () => {
       commentaire.length >= 10
     ) {
       try {
-        await AXIOS_INSTANCE.post("/api/messages", user);
+        await AXIOS_INSTANCE.post("/messages", user);
         setCheck(true);
         setError("");
         setUser({ nom: "", prenom: "", email: "", commentaire: "" });

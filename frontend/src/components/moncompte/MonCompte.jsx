@@ -1,6 +1,6 @@
 import React, { useContext, useState} from 'react';
 import { AuthContext} from '../../utils/context/AuthContext';
-import { useNavigate } from 'react-router';
+import { useNavigate, Navigate } from 'react-router';
 import Profil from "./Profil";
 import Commandes from "./Commandes";
 import Parametres from "./Parametres";
@@ -11,6 +11,10 @@ const MonCompte = () => {
     const { auth, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [ongletActif, setOngletActif] = useState('profil');
+
+    if(auth?.user.role === "admin" || auth?.user.role === "superadmin") {
+        return <Navigate to="/admin" />
+    }
 
     const renderOngletActif = () => {
         switch (ongletActif) {
