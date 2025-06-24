@@ -36,8 +36,8 @@ const  Panier =()=> {
     }
   }
   const handleConnect = () => {
-    localStorage.setItem("redirectAfterLogin", "/panier")
-    navigate("/compte")
+    localStorage.setItem("redirectAfterLogin", "/mon-compte")
+    navigate("/login")
   }
 
   if(!auth) {

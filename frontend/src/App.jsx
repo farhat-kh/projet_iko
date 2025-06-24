@@ -58,6 +58,13 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/confirmation-email" element={<ConfirmationEmail />} />
 
+        {/* Routes privées (auth requise) */}
+        <Route element={<PrivateRouter />}>
+         <Route path="/mon-compte" element={<MonCompte />} />
+
+        </Route>
+      </Route>
+      
         {/* Route administrateur */}
         <Route element={<AdminRouter />}>
           <Route path="/admin/" element={<Dashboard />} />
@@ -66,12 +73,6 @@ function App() {
         <Route path="messages" element={<Messages />} />
 
 
-        {/* Routes privées (auth requise) */}
-        <Route element={<PrivateRouter />}>
-         <Route path="/mon-compte" element={<MonCompte />} />
-
-        </Route>
-      </Route>
 
       {/* Page 404 */}
       <Route path="*" element={<h1>404 - Page non trouvée</h1>} />

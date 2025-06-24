@@ -1,63 +1,46 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../../utils/context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "./dashboard.css";
 
 
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+
+const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }) => {
+    const { logout } = useContext(AuthContext);
+    const handleLogout = () => {
+        logout();
+    };
+
+    
     return (
+    
+       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+    
+        <h2 className="sidebar-title">Dashboard Admin</h2>
 
-       <aside className="sidebar">
-      <h2 className="sidebar-title">Dashboard Admin</h2>
+        {['dashboard', 'produits', 'orders', 'users', 'messages'].map((tab) => (
+          <nav className="sidebar-section" key={tab}>
+            <button
+              className={activeTab === tab ? 'active' : ''}
+              onClick={() => {
+                setActiveTab(tab);
+                setIsOpen(false);
+              }}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          </nav>
+        ))}
 
-      <nav className="sidebar-section">
-        
-        <button
-          className={activeTab === 'dashboard' ? 'active' : ''}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          Tableau de bord
-        </button>
-      </nav>
+        <div className="sidebar-logout">
+          <button className="btn-logout" onClick={handleLogout}>
+            Déconnexion
+          </button>
+        </div>
+      </aside>
 
-      <nav className="sidebar-section">
-        
-        <button
-          className={activeTab === 'produits' ? 'active' : ''}
-          onClick={() => setActiveTab('produits')}
-        >
-          Produits
-        </button>
-      </nav>
-
-      <nav className="sidebar-section">
-        
-        <button
-          className={activeTab === 'orders' ? 'active' : ''}
-          onClick={() => setActiveTab('orders')}
-        >
-          Commandes
-        </button>
-      </nav>
-
-      <nav className="sidebar-section">
-        
-        <button
-          className={activeTab === 'users' ? 'active' : ''}
-          onClick={() => setActiveTab('users')}
-        >
-          Utilisateurs
-        </button>
-      </nav>
-
-      <nav className="sidebar-section">
-        
-        <button
-          className={activeTab === 'messages' ? 'active' : ''}
-          onClick={() => setActiveTab('messages')}
-        >
-          Messages
-        </button>
-      </nav>
-    </aside>
     )
 }
 
