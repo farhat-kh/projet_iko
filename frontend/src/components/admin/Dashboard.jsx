@@ -12,12 +12,14 @@ import {
   faBox,
   faUser,
   faShoppingCart,
-  faEuroSign
+  faEuroSign,
+  faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const { auth } = useContext(AuthContext);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
     totalVentes: 0,
     nbCommandes: 0,
@@ -117,7 +119,16 @@ const Dashboard = () => {
 
   return (
     <div className="admin-container">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <button className="burger-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+        <FontAwesomeIcon icon={faBars} />
+
+      </button>
+      <Sidebar 
+      activeTab={activeTab} 
+      setActiveTab={setActiveTab}
+      isOpen={isSidebarOpen}
+      setIsOpen={setIsSidebarOpen}
+       />
       <main className="admin-main">{renderContent()}</main>
     </div>
   );
