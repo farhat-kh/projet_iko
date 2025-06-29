@@ -167,3 +167,11 @@ body {
     margin-left: 220px; 
     }
 }
+
+@media (min-width: 769px) {
+  .sidebar {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateX(0) !important;
+  }
+}
