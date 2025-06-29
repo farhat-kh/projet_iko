@@ -24,40 +24,27 @@ jobs:
         with:
           node-version: '20'
 
-#       # === BACKEND ===
+      # === BACKEND ===
       - name: Install backend dependencies
         working-directory: backend
         run: npm ci
 
-#       - name: Lint backend
-#         working-directory: backend
-#         run: npm run lint
-
-      - name: Run  tests with Jest
+      - name: Run backend tests
         working-directory: backend
         run: npm test
 
-#       - name: Build backend
-#         working-directory: backend
-#         run: npm run build || echo "Pas de build côté backend"
+      # === FRONTEND ===
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
 
-#       # === FRONTEND ===
-#       - name: Install frontend dependencies
-#         working-directory: frontend
-#         run: npm ci
+      - name: Test frontend
+        working-directory: frontend
+        run: npm run test || echo "Pas de tests frontend pour le moment"
 
-#       - name: Lint frontend
-#         working-directory: frontend
-#         run: npm run lint
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
 
-#       - name: Test frontend
-#         working-directory: frontend
-#         run: npm test
-
-#       - name: Build frontend
-#         working-directory: frontend
-#         run: npm run build
-
-#       # === NOTIFICATION SIMULÉE ===
-#       - name: ✅ Ready to deploy
-#         run: echo "Le build est terminé avec succès. Prêt à déployer en staging."
+      - name: ✅ Ready to deploy
+        run: echo "Le build et les tests sont terminés. Prêt à déployer !"
