@@ -1,67 +1,60 @@
-import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebook, FaInstagram, FaTwitter, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa";
-import logo from "../../assets/logo.png";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router";
+import logo from "../../assets/logo.png";
+import "./footer.css";
 
 function Footer() {
   return (
-    <footer className="bg-light py-4 border-top">
-      <Container>
-        <Row className="text-center text-md-start">
-          {/* Logo et Réseaux Sociaux */}
-          <Col md={3} className="mb-3">
-            <Link to="/">
-               <img src={logo} alt="logo IkoMeubles" className="mb-3" style={{ width: "120px", cursor: "pointer" }} />
-            </Link>
-            <div className="d-flex gap-3 justify-content-center justify-content-md-start">
-              <a href="https://facebook.com/ikomeubles" target="_blank" className="text-dark fs-4"><FaFacebook /></a>
-              <a href="https://instagram.com/ikomeubles" target="_blank" className="text-dark fs-4"><FaInstagram /></a>
-              <a href="https://twitter.com/ikomeubles" target="_blank" className="text-dark fs-4"><FaTwitter /></a>
-            </div>
-          </Col>
+    <footer className="footer-custom">
+      <div className="footer-container">
+        <div className="footer-col">
+          <Link to="/">
+            <img src={logo} alt="logo IkoMeubles" className="footer-logo" />
+          </Link>
+          <div className="footer-social-icons">
+            <a href="https://facebook.com/ikomeubles" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+            <a href="https://instagram.com/ikomeubles" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="https://twitter.com/ikomeubles" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+          </div>
+        </div>
 
-          {/* Liens Boutique et Catégorie */}
-          <Col md={3} className="mb-3">
-            <h5 className="fw-bold">La Boutique</h5>
-            <ul className="list-unstyled">
-            <li><Link to="/a-propos" className="text-dark text-decoration-none">À propos</Link></li>
-            <li><Link to="/contact" className="text-dark text-decoration-none">Contact</Link></li>
-            <li><Link to="/terms" className="text-dark text-decoration-none">Conditions Générales</Link></li>
-            <li><Link to="/privacy" className="text-dark text-decoration-none">Politique de Confidentialité</Link></li>
-            </ul>
-          </Col>
+        <div className="footer-col">
+          <h5>La Boutique</h5>
+          <ul>
+            <li><Link to="/a-propos">À propos</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/terms">Conditions Générales</Link></li>
+            <li><Link to="/privacy">Politique de Confidentialité</Link></li>
+          </ul>
+        </div>
 
-          <Col md={3} className="mb-3">
-            <h5 className="fw-bold">Catégories</h5>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-dark text-decoration-none">Tables</a></li>
-              <li><a href="#" className="text-dark text-decoration-none">Assises</a></li>
-              <li><a href="#" className="text-dark text-decoration-none">Lits</a></li>
-              <li><a href="#" className="text-dark text-decoration-none">Rangements</a></li>
-              <li><a href="#" className="text-dark text-decoration-none">Canapés</a></li>
-              <li><a href="#" className="text-dark text-decoration-none">Buffets</a></li>
-            </ul>
-          </Col>
-          {/* Infos Contact */}
-          <Col md={3}>
-            <h5 className="fw-bold">Contact</h5>
-            <p><FaMapMarkerAlt className="me-2" /> 10 Boulevard Magenta, 75010 Paris</p>
-            <p><FaPhone className="me-2" /> 01 28 17 76 99</p>
-            <p><FaEnvelope className="me-2" /> contact@ikomeubles.fr</p>
-            <p><FaClock className="me-2" /> Dimanche - Samedi 9:30 - 20:00</p>
-          </Col>
-        </Row>
+        <div className="footer-col">
+          <h5>Catégories</h5>
+          <ul>
+            <li><Link to="/categorie/tables">Tables</Link></li>
+            <li><Link to="/categorie/assises">Assises</Link></li>
+            <li><Link to="/categorie/lits">Lits</Link></li>
+            <li><Link to="/categorie/rangements">Rangements</Link></li>
+            <li><Link to="/categorie/canapes">Canapés</Link></li>
+            <li><Link to="/categorie/buffets">Buffets</Link></li>
+          </ul>
+        </div>
 
-        
+        <div className="footer-col">
+          <h5>Contact</h5>
+          <p><FaMapMarkerAlt /> 10 Boulevard Magenta, 75010 Paris</p>
+          <p><FaPhone /> 01 28 17 76 99</p>
+          <p><FaEnvelope /> contact@ikomeubles.fr</p>
+          <p><FaClock /> Dimanche - Samedi 9:30 - 20:00</p>
+        </div>
+      </div>
 
-        {/* Copyright */}
-        <Row className="mt-4">
-          <Col className="text-center">
-            <p className="m-0">© 2025 - IkoMeubles. - Tous droits réservés</p>
-          </Col>
-        </Row>
-      </Container>
+      <div className="footer-bottom">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          Haut de page ↑
+        </button>
+        <p>© 2025 - IkoMeubles. - Tous droits réservés</p>
+      </div>
     </footer>
   );
 }

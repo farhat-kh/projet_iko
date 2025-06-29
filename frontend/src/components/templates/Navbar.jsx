@@ -27,7 +27,7 @@ function NavbarComponent() {
 
       <div className={`nav-items ${menuOpen ? "open" : ""}`}>
         {HEADER_LINKS.map((link, index) => (
-          <NavLink key={index} to={link.path}>
+          <NavLink key={index} to={link.path} onClick={() => setMenuOpen(false)} >
             {link.label}
           </NavLink>
         ))}
