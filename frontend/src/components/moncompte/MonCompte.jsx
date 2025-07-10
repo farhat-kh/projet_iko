@@ -30,32 +30,29 @@ const MonCompte = () => {
     }
     return (
         <div className="compte-container">
-      <h2 className="compte-title">Mon compte</h2>
+            <h2 className="compte-title">Mon compte</h2>
 
-      <div className="compte-nav">
-        <button
-        className={ongletActif === "profil" ? "active" : ""} 
-        onClick={() => setOngletActif("profil")}>Profil</button>
-        <button 
-        className={ongletActif === "commandes" ? "active" : ""}
-        onClick={() => setOngletActif("commandes")}>Commandes</button>
-        <button 
-        className={ongletActif === "parametres" ? "active" : ""}
-        onClick={() => setOngletActif("parametres")}>Paramètres</button>
-      </div>
+            <div className="compte-nav">
+                <button
+                className={ongletActif === "profil" ? "active" : ""} 
+                onClick={() => setOngletActif("profil")}>Profil</button>
+                <button 
+                className={ongletActif === "commandes" ? "active" : ""}
+                onClick={() => setOngletActif("commandes")}>Commandes</button>
+                <button 
+                className={ongletActif === "parametres" ? "active" : ""}
+                onClick={() => setOngletActif("parametres")}>Paramètres</button>
+            </div>
 
-      <div className="compte-content">
-        {renderOngletActif()}
-      </div>
+            <div className="compte-content">
+                {renderOngletActif()}
+            </div>
 
-      <div className="compte-actions">
-      <div className="btn-wrapper">
-      <button onClick={() => navigate("/")} className="btn-retour">Retour à l'accueil</button>
-      </div>
-      <div className="btn-wrapper">
-      <button onClick={logout} className="btn-deconnexion">Se déconnecter</button>
-     </div>
-     </div>
+            <div className="compte-actions">
+            <button onClick={() => navigate("/")} className="btn-retour">Retour à l'accueil</button>
+            <button onClick={logout} className="btn-deconnexion">Se déconnecter</button>
+            </div>
+
 
     </div>
     )

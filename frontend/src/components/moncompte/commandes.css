@@ -28,21 +28,19 @@
   padding: 1rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
 }
 
 .commande-item p {
-  margin: 0.4rem 0;
   font-size: 1rem;
   line-height: 1.4;
 }
 
 .commande-item ul {
-  margin-top: 1rem;
   padding-left: 1rem;
 }
 
 .commande-item ul li {
-  margin-bottom: 0.5rem;
   padding: 0.2rem 0;
   font-size: 0.95rem;
 }
@@ -61,6 +59,8 @@
   .commande-item {
     padding: 1rem;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
     gap: 0.3rem;
   }
 
