@@ -103,7 +103,7 @@ const Parametres = () => {
             value={confirmationMotDePasse}
             onChange={(e) => setConfirmationMotDePasse(e.target.value)}
             required
-            placeholder="Confirmer votre nouveau mot de passe"
+            placeholder="Confirmer le nouveau mot de passe"
           />
             <span onClick={() => setShowConfirm(!showConfirm)} className="eye-toggle">
                <FontAwesomeIcon icon={showConfirm ? faEyeSlash : faEye}  />
