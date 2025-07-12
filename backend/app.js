@@ -25,7 +25,10 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(cors(
     {
-        origin: `http://localhost:${ENV.PORT_APPLICATION_FRONT}`,
+        origin: [
+            "https://projet-iko-khabaches-projects.vercel.app/",
+            "http://localhost:5173",
+        ],
         credentials: true
     }
 ));
