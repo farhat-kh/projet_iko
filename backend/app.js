@@ -26,7 +26,7 @@ app.use(requestLogger);
 app.use(cors(
     {
         origin: [
-            "https://projet-iko-khabaches-projects.vercel.app/",
+            "https://projet-mqtw5dgb9-khabaches-projects.vercel.app",
             "http://localhost:5173",
         ],
         credentials: true
