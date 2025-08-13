@@ -28,7 +28,7 @@ const sendEmail = async(user, token) => {
         const verificationLink = `http://localhost:5173/reset-password/${token}`;
 
         const mailOptions = {
-            from: ENV.EMAIL_PASS,
+            from: ENV.EMAIL_USER,
             to: user.email,
             subject: 'Réinitialisation de mot de passe',
             

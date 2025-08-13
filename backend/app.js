@@ -24,23 +24,20 @@ connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 app.use(express.json());
 app.use(requestLogger);
 
-const allowedOrigins = [
-    "https://projet-iko-git-main-khabaches-projects.vercel.app/",
-    "http://localhost:5173",
-];
-app.use(cors(
-    {
-        origin: (origin, callback) => {
-            if (allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        }
-        ,
-        credentials: true,
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || [
+      "https://ikomeubles-client.onrender.com",
+      "http://localhost:5173"
+    ].includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
     }
-));
+  },
+  credentials: true
+}));
+
 app.use(cookieParser());
 
 // URLS API PREFIX 
