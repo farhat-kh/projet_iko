@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../../utils/services/AxiosInstance'
 import { AuthContext } from '../../utils/context/AuthContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,7 +24,7 @@ const Orders = () => {
 
   const fetchCommandes = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/commande', {
+      const { data } = await api.get('/commande', {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -36,7 +36,7 @@ const Orders = () => {
 
   const handleUpdateStatut = async (id, nouveauStatut) => {
     try {
-      await axios.put(`http://localhost:8000/api/commande/${id}`, { status: nouveauStatut }, {
+      await api.put(`/commande/${id}`, { status: nouveauStatut }, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });

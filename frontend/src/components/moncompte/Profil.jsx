@@ -1,6 +1,6 @@
 import React, { useContext,useState, useEffect } from 'react';
 import { AuthContext } from '../../utils/context/AuthContext';
-import axios from '../../utils/services/AxiosInstance';
+import api from '../../utils/services/AxiosInstance';
 import './profil.css';
 
 
@@ -41,7 +41,7 @@ const Profil = () => {
             return;
         }
         try {
-            const response = await axios.put(`/user/update/${auth.user._id}`, {telephone: formData.telephone});
+            const response = await api.put(`/user/update/${auth.user._id}`, {telephone: formData.telephone});
             
             
             if(response.status === 200 || response.status === 204) {

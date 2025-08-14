@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/services/AxiosInstance';
 import {Link} from 'react-router';
 
 import "../styles/motdepasseoublie.css";
@@ -15,7 +15,7 @@ const MotDePasseOublie = () => {
         setMessage("");
         setError("");
         try {
-            const response = await axios.put("http://localhost:8000/api/user/forgot-password", { email });
+            const response = await api.put("/user/forgot-password", { email });
             setSuccess(true);
             setMessage(response.data.message || "Instructions de réinitialisation envoyées. Veuillez vérifier votre boîte de réception.");
         } catch (err) {

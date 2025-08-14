@@ -11,7 +11,7 @@ import rectangle12 from "../assets/Rectangle-12.png";
 import rectangle13 from "../assets/Rectangle-13.png";
 import "../styles/global.css";
 import "../styles/home.css";
-import axios from "axios";
+import api from "../utils/services/AxiosInstance";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -24,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/categorie");
+        const response = await api.get("/categorie");
         setCategories(response.data);
       } catch (error) {
         setError("Erreur lors de la récupération des catégories");
@@ -39,7 +39,7 @@ const Home = () => {
   useEffect(() => {
     const fetchInspiration = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/produit");
+        const response = await api.get("/produit");
         const filteredInspiration = response.data.filter(
           (item) => item.categorie.name.toLowerCase() === "tables"
         );

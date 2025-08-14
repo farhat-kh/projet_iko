@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/contact.css";
-import AXIOS_INSTANCE from "../utils/services/AxiosInstance"
+import api from "../utils/services/AxiosInstance";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
 
@@ -49,7 +49,7 @@ const Contact = () => {
       commentaire.length >= 10
     ) {
       try {
-        await AXIOS_INSTANCE.post("/messages", user);
+        await api.post("/messages", user);
         setCheck(true);
         setError("");
         setUser({ nom: "", prenom: "", email: "", commentaire: "" });

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Helmet } from "react-helmet";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router";
-import axios from "axios";
+import api from "../utils/services/AxiosInstance";
 
 
 
@@ -17,7 +17,7 @@ function Categories() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/categorie");
+        const response = await api.get("/categorie");
         setCategories(response.data);
       } catch (error) {
         setError("Erreur lors de la récupération des catégories");

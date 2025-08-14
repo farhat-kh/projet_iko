@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from "../../utils/services/AxiosInstance";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,7 +19,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/user/all", {
+      const { data } = await api.get("/user/all", {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -31,7 +31,7 @@ const Users = () => {
 
   const desactiverUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/user/delete/${id}`, {
+      await api.delete(`/user/delete/${id}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -43,8 +43,8 @@ const Users = () => {
 
   const activerUser = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:8000/api/user/update/${id}`,
+      await api.put(
+        `/user/update/${id}`,
         { isActive: true },
         {
           headers: { Authorization: `Bearer ${auth?.token}` },

@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import { useEffect, useState, useContext } from 'react';import api from '../../utils/services/AxiosInstance';
 import { AuthContext } from '../../utils/context/AuthContext';
 import Users from './Users';
 import Produits from './Produits';
@@ -35,9 +34,9 @@ const Dashboard = () => {
       };
 
       const [usersRes, produitsRes, commandesRes] = await Promise.all([
-        axios.get('http://localhost:8000/api/user/all', { headers }),
-        axios.get('http://localhost:8000/api/produit', { headers }),
-        axios.get('http://localhost:8000/api/commande', { headers })
+        api.get('/user/all', { headers }),
+        api.get('/produit', { headers }),
+        api.get('/commande', { headers })
       ]);
 
       const totalVentes = commandesRes.data.reduce(

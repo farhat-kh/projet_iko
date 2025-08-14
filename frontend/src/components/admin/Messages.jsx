@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from "../../utils/services/AxiosInstance";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,7 +22,7 @@ const Messages = () => {
 
   const fetchMessages = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/messages", {
+      const { data } = await api.get("/messages", {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -34,7 +34,7 @@ const Messages = () => {
 
   const envoyerReponse = async () => {
     try {
-      await axios.post(`http://localhost:8000/api/messages/repondre/${selectedMessage._id}`, 
+      await api.post(`/messages/repondre/${selectedMessage._id}`, 
         { reponse },
         {
           headers: { Authorization: `Bearer ${auth?.token}` },
@@ -53,7 +53,7 @@ const Messages = () => {
   const supprimerMessage = async (id) => {
     if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce message ?")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/messages/${id}`, {
+      await api.delete(`/messages/${id}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import axios from "axios";
+import api from "../utils/services/AxiosInstance";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import "../styles/categoriePage.css"; 
 const CategoriePage = () => {
@@ -10,7 +10,7 @@ const CategoriePage = () => {
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/produit");
+        const response = await api.get("/produit");
         const filtered = response.data.filter(
           (p) => p.categorie.name.toLowerCase() === nom.toLowerCase()
         );

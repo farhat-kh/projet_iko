@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../utils/context/AuthContext';
-import axios from '../../utils/services/AxiosInstance';
+import api from '../../utils/services/AxiosInstance';
 import './commandes.css'; 
 
 
@@ -14,7 +14,7 @@ const Commandes = () => {
     useEffect(() => {
         const fetchCommandes = async () => {
             try {
-                const response = await axios.get("/commande/user");
+                const response = await api.get("/commande/user");
               
                 
                 setCommandes(response.data);

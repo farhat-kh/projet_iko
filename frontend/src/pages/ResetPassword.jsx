@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/services/AxiosInstance';
 import { useParams, useNavigate, Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash , faLock , faKey} from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.put(`http://localhost:8000/api/user/reset-password/${token}`, { newPassword });
+            const response = await api.put(`/user/reset-password/${token}`, { newPassword });
             setSuccessMsg(response.data.message);
             setNewPassword("");
             setConfirmPassword("");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
+import api from "../utils/services/AxiosInstance";
 import { useCart } from "../utils/context/CartContext";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Toast from "../components/Toast";
@@ -21,7 +21,7 @@ const ProduitDetail = () => {
   useEffect(() => {
     const fetchProduit = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/produit/${id}`);
+        const response = await api.get(`/produit/${id}`);
         setProduit(response.data);
       } catch (error) {
         console.error("Erreur lors du chargement du produit", error);

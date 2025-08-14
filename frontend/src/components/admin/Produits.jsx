@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from '../../utils/services/AxiosInstance'
 import { AuthContext } from "../../utils/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,7 +32,7 @@ const Produits = () => {
 
   const fetchProduits = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/produit", {
+      const { data } = await api.get("/produit", {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -43,7 +43,7 @@ const Produits = () => {
   };
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/categorie", {
+      const { data } = await api.get("/categorie", {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -56,7 +56,7 @@ const Produits = () => {
   const addProduit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8000/api/produit", newProduit, {
+      const { data } = await api.post("/produit", newProduit, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -76,7 +76,7 @@ const Produits = () => {
 
   const deleteProduit = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/produit/${id}`, {
+      await api.delete(`/produit/${id}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -89,7 +89,7 @@ const Produits = () => {
   const augmenterStock = async (produit) => {
     try {
       const updated = { ...produit, quantite: produit.quantite + 1 };
-      await axios.put(`http://localhost:8000/api/produit/${produit._id}`, updated, {
+      await api.put(`/produit/${produit._id}`, updated, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -102,7 +102,7 @@ const Produits = () => {
   const toggleVisibilite = async (produit) => {
     try {
       const updated = { ...produit, isVisible: !produit.isVisible };
-      await axios.put(`http://localhost:8000/api/produit/${produit._id}`, updated, {
+      await api.put(`/produit/${produit._id}`, updated, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });
@@ -120,7 +120,7 @@ const Produits = () => {
   const enregistrerModification = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/produit/${formModif._id}`, formModif, {
+      await api.put(`/produit/${formModif._id}`, formModif, {
         headers: { Authorization: `Bearer ${auth?.token}` },
         withCredentials: true,
       });

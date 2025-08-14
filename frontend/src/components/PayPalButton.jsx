@@ -1,6 +1,6 @@
 import React from "react";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import AXIOS_INSTANCE from "../utils/services/AxiosInstance";
+import api from "../utils/services/AxiosInstance";
 import { useContext } from "react";
 import { AuthContext } from "../utils/context/AuthContext";
 
@@ -16,7 +16,7 @@ const PayPalButton = ({ total, onSuccess, livraisonData, panierData }) => {
                 alert("Veuillez remplir toutes les informations de livraison avant de passer commande.");
                 return;
             }
-            const response = await AXIOS_INSTANCE.post("/commande", {
+            const response = await api.post("/commande", {
                 userId: auth.user._id,
                 produits: panierData.map((item) => ({
                     produitId: item._id,

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import axios from '../../utils/services/AxiosInstance';
+import api from '../../utils/services/AxiosInstance';
 import { AuthContext } from '../../utils/context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -31,7 +31,7 @@ const Parametres = () => {
             return;
         }
         try {
-            const response = await axios.put(`/user/update-password/${auth.user._id}`, {
+            const response = await api.put(`/user/update-password/${auth.user._id}`, {
                 ancienMotDePasse,
                 nouveauMotDePasse
             });
@@ -52,7 +52,7 @@ const Parametres = () => {
         if(!confirmDelete) return;
 
         try {
-            const response = await axios.delete(`/user/delete/${auth.user._id}`)
+            const response = await api.delete(`/user/delete/${auth.user._id}`)
             if(response.status === 200) {
                 logout(); 
             }

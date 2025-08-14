@@ -4,7 +4,7 @@ import { AuthContext } from '../utils/context/AuthContext';
 import { useNavigate } from 'react-router';
 import "../styles/commande.css";
 import PayPalButton from '../components/PayPalButton';
-import axios from 'axios';
+import api from '../utils/services/AxiosInstance';
 
 const Commande = () => {
   const { cart, totalPrice, clearCart } = useCart();
@@ -44,7 +44,7 @@ const Commande = () => {
    
     if(!auth.user.telephone && !formData.telephone) {
       try {
-        await axios.put(`/api/user/${auth.user._id}`, {
+        await api.put(`/user/${auth.user._id}`, {
           telephone: formData.telephone
         });
       } catch (error) {
