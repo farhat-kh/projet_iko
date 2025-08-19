@@ -26,10 +26,5 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^6.3.3"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "moduleDirectories": ["node_modules", "<rootDir>"],
-    "testTimeout": 10000
   }
 }
