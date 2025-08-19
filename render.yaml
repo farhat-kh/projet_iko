@@ -29,7 +29,7 @@ services:
       - key: EMAIL_PASS
         sync: false
       - key: FRONTEND_URL
-        value: https://projet-iko.onrender.com
+        value: https://projet-iko-b425.onrender.com
 
   # Service Frontend - Site statique React avec SPA routing
   - type: web
