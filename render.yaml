@@ -40,7 +40,6 @@ services:
     buildCommand: |
       cd frontend
       npm install
-      npm install serve
       npm run build
       echo "Build du frontend termine avec succes"
     startCommand: |
