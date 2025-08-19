@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { Link } from "react-router";
 import Carousel from "react-bootstrap/Carousel";
@@ -40,15 +40,22 @@ const Home = () => {
     const fetchInspiration = async () => {
       try {
         const response = await api.get("/produit");
-        const filteredInspiration = response.data.filter(
-          (item) => item.categorie.name.toLowerCase() === "tables"
-        );
-        setInspiredProducts(filteredInspiration.slice(0, 2)); 
+        // Vérification de sécurité pour s'assurer que response.data est un tableau
+        if (Array.isArray(response.data)) {
+          const filteredInspiration = response.data.filter(
+            (item) => item.categorie && item.categorie.name && item.categorie.name.toLowerCase() === "tables"
+          );
+          setInspiredProducts(filteredInspiration.slice(0, 2));
+        } else {
+          console.warn("L'API n'a pas retourné un tableau:", response.data);
+          setInspiredProducts([]);
+        }
       } catch (error) {
         console.error("Erreur lors du chargement de l'inspiration :", error);
+        setInspiredProducts([]);
       }
     };
-  
+
     fetchInspiration();
   }, []);
   

@@ -11,12 +11,19 @@ const CategoriePage = () => {
     const fetchProduits = async () => {
       try {
         const response = await api.get("/produit");
-        const filtered = response.data.filter(
-          (p) => p.categorie.name.toLowerCase() === nom.toLowerCase()
-        );
-        setProduits(filtered);
+        // Vérification de sécurité pour s'assurer que response.data est un tableau
+        if (Array.isArray(response.data)) {
+          const filtered = response.data.filter(
+            (p) => p.categorie && p.categorie.name && p.categorie.name.toLowerCase() === nom.toLowerCase()
+          );
+          setProduits(filtered);
+        } else {
+          console.warn("L'API n'a pas retourné un tableau:", response.data);
+          setProduits([]);
+        }
       } catch (error) {
         console.error("Erreur lors du chargement des produits :", error);
+        setProduits([]);
       }
     };
 
