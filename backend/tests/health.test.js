@@ -1,18 +1,9 @@
 const request = require('supertest');
 const app = require('../app');
 
-/**
- * Tests pour l'endpoint de verification de sante de l'application
- * Cet endpoint permet de verifier que l'application fonctionne correctement
- * et est utilise par les systemes de monitoring et de deploiement
- */
 describe('Endpoint de verification de sante', () => {
 
-  /**
-   * Test principal qui verifie que l'endpoint /api/health repond correctement
-   * avec un statut HTTP 200 et contient toutes les informations necessaires
-   * pour confirmer que l'application est operationnelle
-   */
+
   test('GET /api/health doit retourner 200 avec le statut de sante', async () => {
     const response = await request(app)
       .get('/api/health')
