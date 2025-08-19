@@ -26,10 +26,8 @@ services:
         sync: false
       - key: EMAIL_PASS
         sync: false
-      - key: PAYPAL_CLIENT_ID
-        sync: false
-      - key: PAYPAL_CLIENT_SECRET
-        sync: false
+      - key: FRONTEND_URL
+        value: https://projet-iko.onrender.com
 
   # Service Frontend - Site statique React
   - type: web
@@ -45,6 +43,8 @@ services:
     staticPublishPath: ./frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://YOUR_BACKEND_SERVICE_NAME.onrender.com/api
+        value: https://projet-iko.onrender.com/api
       - key: VITE_NODE_ENV
         value: production
+      - key: VITE_PAYPAL_CLIENT_ID
+        sync: false
