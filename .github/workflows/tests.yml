@@ -8,7 +8,6 @@ on:
 
 env:
   NODE_VERSION: '20'
-  PNPM_VERSION: '8'
 
 jobs:
   test-backend:
@@ -23,19 +22,16 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        
-    - name: Configuration pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.PNPM_VERSION }}
-        
+        cache: 'npm'
+        cache-dependency-path: './backend/package-lock.json'
+
     - name: Installation dependances backend
       working-directory: ./backend
-      run: pnpm install
-      
+      run: npm ci
+
     - name: Execution tests backend
       working-directory: ./backend
-      run: pnpm test
+      run: npm test
 
   test-frontend:
     name: Tests Frontend
@@ -49,16 +45,13 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        
-    - name: Configuration pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.PNPM_VERSION }}
-        
+        cache: 'npm'
+        cache-dependency-path: './frontend/package-lock.json'
+
     - name: Installation dependances frontend
       working-directory: ./frontend
-      run: pnpm install
-      
+      run: npm ci
+
     - name: Build frontend
       working-directory: ./frontend
-      run: pnpm run build
+      run: npm run build
