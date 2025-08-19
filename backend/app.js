@@ -24,13 +24,16 @@ connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 app.use(express.json());
 app.use(requestLogger);
 
+// CORS configuration with environment variables
+const allowedOrigins = [
+  ENV.FRONTEND_URL || "http://localhost:5173",
+  "http://localhost:5173",
+  "http://localhost:3000"
+].filter(Boolean);
+
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || [
-      "https://ikomeubles-client.onrender.com",
-      "http://localhost:5173",
-      "http://localhost:3000"
-    ].includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
