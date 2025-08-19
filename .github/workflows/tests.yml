@@ -1,0 +1,64 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8'
+
+jobs:
+  test-backend:
+    name: Tests Backend
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Recuperation du code
+      uses: actions/checkout@v4
+      
+    - name: Configuration Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: Configuration pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ env.PNPM_VERSION }}
+        
+    - name: Installation dependances backend
+      working-directory: ./backend
+      run: pnpm install
+      
+    - name: Execution tests backend
+      working-directory: ./backend
+      run: pnpm test
+
+  test-frontend:
+    name: Tests Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Recuperation du code
+      uses: actions/checkout@v4
+      
+    - name: Configuration Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: Configuration pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ env.PNPM_VERSION }}
+        
+    - name: Installation dependances frontend
+      working-directory: ./frontend
+      run: pnpm install
+      
+    - name: Build frontend
+      working-directory: ./frontend
+      run: pnpm run build

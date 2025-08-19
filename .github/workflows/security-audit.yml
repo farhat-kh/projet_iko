@@ -1,0 +1,45 @@
+name: Audit de Securite
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Execution automatique chaque lundi a 9h
+    - cron: '0 9 * * 1'
+
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8'
+
+jobs:
+  audit-dependencies:
+    name: Audit des Dependances
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Recuperation du code
+      uses: actions/checkout@v4
+      
+    - name: Configuration Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: Configuration pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ env.PNPM_VERSION }}
+        
+    - name: Audit backend
+      working-directory: ./backend
+      run: |
+        pnpm install
+        pnpm audit --audit-level moderate
+        
+    - name: Audit frontend
+      working-directory: ./frontend
+      run: |
+        pnpm install
+        pnpm audit --audit-level moderate

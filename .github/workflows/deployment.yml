@@ -1,0 +1,51 @@
+name: Deploiement
+
+on:
+  push:
+    branches: [ main ]
+  workflow_run:
+    workflows: ["Tests", "Audit de Securite"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploiement sur Render
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Recuperation du code
+      uses: actions/checkout@v4
+      
+    - name: Declenchement deploiement Render
+      run: |
+        curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "ref": "${{ github.sha }}",
+            "message": "Deploiement depuis GitHub Actions - ${{ github.event.head_commit.message }}"
+          }'
+          
+    - name: Attente deploiement
+      run: |
+        echo "Deploiement declenche. Attente de completion..."
+        sleep 45
+        
+    - name: Verification sante application
+      run: |
+        if [ -n "${{ secrets.RENDER_SERVICE_URL }}" ]; then
+          echo "Verification de la sante de l'application..."
+          for i in {1..8}; do
+            if curl -f -s "${{ secrets.RENDER_SERVICE_URL }}/api/health" > /dev/null; then
+              echo "Deploiement reussi!"
+              exit 0
+            fi
+            echo "Tentative $i echouee, nouvelle tentative dans 30 secondes..."
+            sleep 30
+          done
+          echo "Verification du deploiement echouee"
+          exit 1
+        else
+          echo "RENDER_SERVICE_URL non configure, verification ignoree"
+        fi

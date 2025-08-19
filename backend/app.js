@@ -40,7 +40,17 @@ app.use(cors({
 
 app.use(cookieParser());
 
-// URLS API PREFIX 
+// HEALTH CHECK ENDPOINT
+app.get('/api/health', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development',
+        version: '1.0.0'
+    });
+});
+
+// URLS API PREFIX
 
 app.use('/api/user', userRouter);
 app.use('/api/produit', produitRouter);
