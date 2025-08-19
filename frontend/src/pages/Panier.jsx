@@ -43,11 +43,11 @@ const  Panier =()=> {
   if(!auth) {
     return (
       <div className='panier-vide'>
-        <img src={panierVide} alt="Panier vide" className="panier-vide-img" />
         <h1>Votre Panier est vide</h1>
         <button onClick={handleConnect}>connectez-vous pour continuer</button>
+        <img src={panierVide} alt="Panier vide" className="panier-vide-img" />
       </div>
-    ) 
+    )
   }
 
   if(cart.length === 0) {

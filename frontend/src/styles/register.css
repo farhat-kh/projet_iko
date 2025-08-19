@@ -1,81 +1,111 @@
+/* Style harmonisé avec login.css pour cohérence */
+.inscription-wrapper {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+background-color: #fff;
+padding: 0.5rem;
+}
+
 .inscription-container {
-max-width: 400px;
-margin: 50px auto;
-padding: 20px;
-background: white;
-border-radius: 10px;
-box-shadow: 0px 0px 10px rgba(214, 70, 70, 0.1);
+background-color: white;
+border: 1px solid #ccc;
+padding: 2.5rem;
+border-radius: 12px;
+box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+width: 100%;
+max-width: 420px;
 text-align: center;
 }
 
-h2 {
-font-size: 24px;
-margin-bottom: 10px;
+.inscription-title {
+font-size: 1.4rem;
+font-weight: bold;
+margin-bottom: 1rem;
 }
 
 .obligatoire {
-font-size: 12px;
-color: red;
-margin-bottom: 10px;
+font-size: 0.9rem;
+color: #d93025;
+margin-bottom: 1.5rem;
 }
 
 .inscription-form {
 display: flex;
 flex-direction: column;
 }
-.inscription-form label {
-display: block;
+
+.register-group {
+margin-bottom: 1.2rem;
 text-align: left;
-margin-top: 10px;
-font-weight: 500;
-margin-top: 10px;
-color: #333;
-    
 }
-input {
+
+.register-group label {
+display: block;
+margin-bottom: 0.4rem;
+font-weight: 500;
+}
+
+.register-group input {
 width: 100%;
-padding: 10px;
-margin: 8px 0;
+padding: 0.7rem;
+border-radius: 10px;
 border: 1px solid #ccc;
-border-radius: 5px;
+font-size: 1rem;
 }
 
 .civilite {
 display: flex;
 justify-content: center;
 align-items: center;
-gap: 10px;
-margin-bottom: 10px;
+gap: 1rem;
+margin-bottom: 1.2rem;
 }
 
-button {
+.civilite label {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-weight: 500;
+cursor: pointer;
+}
+
+.civilite input[type="radio"] {
+width: auto;
+margin: 0;
+}
+
+.inscription-button {
+width: 100%;
 background-color: black;
 color: white;
-padding: 10px;
-margin-top: 20px;
+padding: 0.8rem;
+font-weight: bold;
 border: none;
-border-radius: 5px;
+border-radius: 10px;
 cursor: pointer;
-font-size: 16px;
-} 
+margin-top: 1rem;
+transition: background-color 0.3s ease;
+}
 
-button:hover {
-background-color: #333;
-color: #fff;
+.inscription-button:hover {
+background-color: #222;
 }
 
 .inscription-link {
-margin-top: 10px;
-font-size: 14px;
+margin-top: 1.2rem;
+font-size: 0.9rem;
 }
+
 .inscription-link p {
 margin: 0;
 text-align: center;
-font-size: 14px; 
 }
+
 .inscription-link a {
-color: #007BFF;
-text-decoration: none;
+color: #000;
+text-decoration: underline;
 }
 
 .inscription-link a:hover {
@@ -83,39 +113,63 @@ text-decoration: underline;
 }
 
 .error-message {
-color: red;
-margin-top: 10px;
+color: #d93025;
+font-weight: 600;
+font-size: 0.95rem;
+background-color: #fdecea;
+padding: 12px 16px;
+border: 1px solid #f5c6cb;
+border-radius: 8px;
+margin-top: 16px;
+text-align: center;
+animation: fadeIn 0.4s ease-in-out;
 }
 
 .success-message {
-color: green;
-margin-top: 10px;
+color: #155724;
+font-weight: 600;
+font-size: 0.95rem;
+background-color: #d4edda;
+padding: 12px 16px;
+border: 1px solid #c3e6cb;
+border-radius: 8px;
+margin-top: 16px;
+text-align: center;
+animation: fadeIn 0.4s ease-in-out;
 }
 
-.error-message, .success-message {
-font-size: 16px;
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(-4px); }
+to { opacity: 1; transform: translateY(0); }
 }
 
+/* Style pour le wrapper de mot de passe */
+.password-wrapper {
+position: relative;
+}
+
+.password-wrapper input {
+width: 100%;
+padding-right: 40px;
+}
+
+.toggle-password {
+position: absolute;
+right: 10px;
+top: 50%;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 18px;
+}
+
+/* Media queries harmonisées */
 @media (max-width: 768px) {
-.inscription-container {
-max-width: 90%;
-}
-}
-
-@media (max-width: 480px) {
-.inscription-container {
-max-width: 90%;
-}
+.inscription-wrapper {
+padding: 1rem;
 }
 
-@media (max-width: 360px) {
 .inscription-container {
-max-width: 90%;
-}
-}
-
-@media (max-width: 320px) {
-.inscription-container {
+padding: 2rem;
 max-width: 90%;
 }
 }

@@ -55,9 +55,10 @@ const Register = () => {
   }
 
   return (
-    <div className="inscription-container">
-      <h2>INSCRIPTION</h2>
-      <p className="obligatoire">* Tous les champs sont obligatoires</p>
+    <div className="inscription-wrapper">
+      <div className="inscription-container">
+        <h2 className="inscription-title">INSCRIPTION</h2>
+        <p className="obligatoire">* Tous les champs sont obligatoires</p>
 
       <form onSubmit={handleSubmit} className="inscription-form">
         <div className="civilite">
@@ -115,7 +116,7 @@ const Register = () => {
             )}
           </div>
         ))}
-        <button type="submit" disabled={isLoading}>
+        <button className="inscription-button" type="submit" disabled={isLoading}>
           {isLoading ? "Chargement..." : "S'inscrire"}
         </button>
 
@@ -126,8 +127,9 @@ const Register = () => {
         </div>
         {error && <p className="error-message">{error}</p>}
         {message && <p className="success-message">{message}</p>}
-        
+
       </form>
+      </div>
     </div>
   );
 };
