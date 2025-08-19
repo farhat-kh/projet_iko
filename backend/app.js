@@ -28,7 +28,8 @@ app.use(cors({
   origin: function (origin, callback) {
     if (!origin || [
       "https://ikomeubles-client.onrender.com",
-      "http://localhost:5173"
+      "http://localhost:5173",
+      "http://localhost:3000"
     ].includes(origin)) {
       callback(null, true);
     } else {
