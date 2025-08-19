@@ -29,23 +29,20 @@ services:
       - key: FRONTEND_URL
         value: https://projet-iko.onrender.com
 
-  # Service Frontend - Site statique React
+  # Service Frontend - Site statique React avec SPA routing
   - type: web
     name: ikomeubles-frontend
-    env: static
+    env: node
     region: frankfurt
     plan: free
     buildCommand: |
       cd frontend
       npm install
       npm run build
-      cp public/_redirects dist/_redirects
       echo "Build du frontend termine avec succes"
-    staticPublishPath: ./frontend/dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    startCommand: |
+      cd frontend
+      npx serve dist -s -p $PORT
     envVars:
       - key: VITE_API_URL
         value: https://projet-iko.onrender.com/api
