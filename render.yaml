@@ -1,0 +1,50 @@
+services:
+  # Service Backend - API Node.js
+  - type: web
+    name: ikomeubles-backend
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: |
+      cd backend
+      npm install
+      echo "Installation des dependances backend terminee"
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_NAME
+        sync: false
+      - key: MONGO_URI
+        sync: false
+      - key: TOKEN
+        generateValue: true
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+
+  # Service Frontend - Site statique React
+  - type: web
+    name: ikomeubles-frontend
+    env: static
+    region: frankfurt
+    plan: free
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
+      echo "Build du frontend termine avec succes"
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://YOUR_BACKEND_SERVICE_NAME.onrender.com/api
+      - key: VITE_NODE_ENV
+        value: production
