@@ -16,13 +16,13 @@ const messageRouter = require('./router/message.router');
 const commandeRouter = require('./router/commande.router');
 
 
+app.set('trust proxy', 1); 
 
 // CONNECT TO MONGODB
 connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 
 
 // MIDDLEWARES
-app.set('trust proxy', 1); 
 
 app.use(express.json());
 app.use(requestLogger);
