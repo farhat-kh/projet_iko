@@ -51,7 +51,7 @@ const sendEmail = async(user, token) => {
 const sendVerificationEmail = async (user, token) => {
     try {
         const backBase = ENV.BACKEND_PUBLIC_URL || 'http://localhost:8000';
-        const verificationLink = `${backBase}/api/users/verify-email/${token}`;
+        const verificationLink = `${backBase}/api/user/verify-email/${token}`;
         const mailOptions = {
             from: ENV.EMAIL_USER,
             to: user.email,
