@@ -81,10 +81,11 @@ try {
     const token = jwt.sign({ id: user._id, role: user.role }, ENV.TOKEN, { expiresIn: '24h' });
     const {password, ...userWithoutPassword} = user._doc;
 
+    const isProd = process.env.NODE_ENV === "production";
     res.cookie("access_token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000
     });
     res.status(200).json({
@@ -220,10 +221,12 @@ const deleteUser = async (req, res, next) => {
   
 // Déconnecter un utilisateur (supprimer le cookie JWT)
 const logoutUser = (req, res) => {
+  
+    const isProd = process.env.NODE_ENV === "production";
     res.clearCookie("access_token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
     });
     res.status(200).json({ message: "Utilisateur déconnecté avec succès" });
   };

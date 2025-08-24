@@ -20,7 +20,10 @@ const commandeRouter = require('./router/commande.router');
 // CONNECT TO MONGODB
 connectMongoDB(ENV.MONGO_URI, ENV.DB_NAME);
 
+
 // MIDDLEWARES
+app.set('trust proxy', 1); 
+
 app.use(express.json());
 app.use(requestLogger);
 

@@ -14,6 +14,19 @@ const AXIOS_INSTANCE = axios.create({
     }
 })
 
+AXIOS_INSTANCE.interceptors.request.use((config) => {
+  try {
+    const raw = localStorage.getItem("auth");
+    if (raw) {
+      const { token } = JSON.parse(raw) || {};
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+  } catch (_) {}
+  return config;
+});
+
 AXIOS_INSTANCE.interceptors.response.use(
     (response) => response,
     (error) => {

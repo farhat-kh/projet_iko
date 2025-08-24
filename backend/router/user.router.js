@@ -17,7 +17,7 @@ router.post('/login' , userController.sign );
 router.put("/update-password/:id", verifieToken, userController.updatePassword);
 router.put("/forgot-password", userController.forgotPassword);
 router.put("/reset-password/:token", userController.resetPassword);
-router.get("/logout", verifieToken, userController.logoutUser);
+router.get("/logout",userController.logoutUser);
 router.get("/verify-email/:token", userController.verifyEmail);
 router.get("/all", verifieAdmin, userController.getAllUsers);
 router.get("/:id", userController.getUser);

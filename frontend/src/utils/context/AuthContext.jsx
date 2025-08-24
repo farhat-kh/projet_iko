@@ -62,17 +62,19 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const logout = async () => {
+const logout = async () => {
     try {
-    await AXIOS_INSTANCE.get(URLS.GET_LOGOUT, {withCredentials: true});
-    setAuth(null)
-    localStorage.removeItem("auth")
-    setAuth(null)
-    navigate("/")
+      await AXIOS_INSTANCE.get(URLS.GET_LOGOUT, { withCredentials: true });
     } catch (error) {
-      console.error("Erreur lors de la deconnexion :", error)
+      console.error("Erreur lors de la deconnexion :", error);
+    } finally {
+      localStorage.removeItem("auth");
+      setAuth(null);
+      navigate("/");
     }
-  }
+  };
+
+
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, login, logout, register, isLoading }}>
