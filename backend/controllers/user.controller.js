@@ -188,7 +188,8 @@ const verifyEmail = async (req, res, next) => {
         if (user.isVerified) return next(createError(400, "Utilisateur déjà vérifié"));
         user.isVerified = true;
         await user.save();
-        res.redirect(`http://localhost:5173/confirmation-email`);
+        const front = ENV.FRONTEND_URL || 'http://localhost:5173';
+        res.redirect(`${front}/confirmation-email`);
     } catch (error) {
         return next(createError(500, error.message));
     }

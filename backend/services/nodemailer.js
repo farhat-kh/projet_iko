@@ -25,7 +25,8 @@ transporter.verify((error, success) => {
 
 const sendEmail = async(user, token) => {
     try {
-        const verificationLink = `http://localhost:5173/reset-password/${token}`;
+        const resetBase = ENV.FRONTEND_URL || 'http://localhost:5173';
+        const verificationLink = `${resetBase}/reset-password/${token}`;
 
         const mailOptions = {
             from: ENV.EMAIL_USER,
@@ -49,7 +50,8 @@ const sendEmail = async(user, token) => {
 
 const sendVerificationEmail = async (user, token) => {
     try {
-        const verificationLink = `http://localhost:8000/api/user/verify-email/${token}`;
+        const backBase = ENV.BACKEND_PUBLIC_URL || 'http://localhost:8000';
+        const verificationLink = `${backBase}/api/users/verify-email/${token}`;
         const mailOptions = {
             from: ENV.EMAIL_USER,
             to: user.email,

@@ -12,7 +12,8 @@ const ENV = {
     TOKEN: process.env.TOKEN,
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASS: process.env.EMAIL_PASS,
-    FRONTEND_URL: process.env.FRONTEND_URL
+    FRONTEND_URL: process.env.FRONTEND_URL,
+    BACKEND_PUBLIC_URL: process.env.BACKEND_PUBLIC_URL,
 }
 
 module.exports = ENV;
